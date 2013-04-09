@@ -14,6 +14,7 @@ public class Logo extends BaseScreen {
 	private SpriteBatch batch;
 	private Texture texture;
 	private Sprite sprite;
+	private int time = 0;
 
 	public Logo(Game game) {
 		super(game);
@@ -39,9 +40,9 @@ public class Logo extends BaseScreen {
 		batch.begin();
 		sprite.draw(batch);
 		batch.end();
-		if (Gdx.input.isTouched()) {
-			Gdx.app.debug("xue", "touch touch");
-			Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+		time++;
+		if (time > 50) {
+			Gdx.app.debug("xue", "time:" + time);
 			super.game.setScreen(new MainMenu(super.game));
 		}
 	}

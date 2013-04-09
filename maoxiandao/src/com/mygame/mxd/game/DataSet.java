@@ -2,8 +2,8 @@ package com.mygame.mxd.game;
 
 public class DataSet {
 	//屏幕方面
-	public static int ScreenHeight = 400;
-	public static int ScreenWidth = 600;
+	public static int ScreenHeight = 480;
+	public static int ScreenWidth = 800;
 	
 	//游戏行为
 
