@@ -26,19 +26,26 @@ public class MainMenu extends BaseScreen {
 		batch = new SpriteBatch();
 		texture = new Texture(Gdx.files.internal("data/menu/menu_bg.jpg"));
 		sprite = new Sprite(texture, 420, 380, 800, 500);
-		
+
 	}
 
 	@Override
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
-		//sprite.setColor(1, 1, 1, 200);
+		// sprite.setColor(1, 1, 1, 200);
 		batch.begin();
 		sprite.draw(batch);
 		batch.end();
-		if (Gdx.input.isTouched()){
+		if (Gdx.input.isTouched()) {
 			super.game.setScreen(new GameScreen(super.game));
 		}
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		texture.dispose();
+		batch.dispose();
 	}
 }
