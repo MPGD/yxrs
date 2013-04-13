@@ -3,12 +3,17 @@ package com.mygame.mxd.game.actor;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 public class Badboy extends GameActor{
 	
 	public static String BADBOY_IMG_SRC = "data/ghost01.png";
-	private float scale = 1f;
+	private float scaleX = 1f;
+	private float scaleY = 1f;
+	private float speed = 2;
+	private int size = 81;
+	
 	@Override
 	public boolean checkPostion() {
 		// TODO Auto-generated method stub
@@ -19,10 +24,10 @@ public class Badboy extends GameActor{
 		Texture temp = new Texture(BADBOY_IMG_SRC);
 
 		// 加载关键帧动画
-		TextureRegion[] move = new TextureRegion(temp).split(81, 81)[0];
-		TextureRegion[] idle = new TextureRegion(temp).split(81, 81)[1];
-		TextureRegion[] hurt = new TextureRegion(temp).split(81, 81)[3];
-		TextureRegion[] attack = new TextureRegion(temp).split(81, 81)[4];
+		TextureRegion[] move = new TextureRegion(temp).split(size, size)[0];
+		TextureRegion[] idle = new TextureRegion(temp).split(size, size)[1];
+		TextureRegion[] hurt = new TextureRegion(temp).split(size, size)[3];
+		TextureRegion[] attack = new TextureRegion(temp).split(size, size)[4];
 		
 		Sprite [] _move = new Sprite[4];
 		Sprite [] _idle = new Sprite[4];
@@ -35,10 +40,10 @@ public class Badboy extends GameActor{
 			_hurt[i] = new Sprite(hurt[i]);
 			_attack[i] = new Sprite(attack[i]);
 			
-			_move[i].setScale(scale);
-			_idle[i].setScale(scale);
-			_hurt[i].setScale(scale);
-			_attack[i].setScale(scale);
+			_move[i].setScale(scaleX, scaleY);
+			_idle[i].setScale(scaleX, scaleY);
+			_hurt[i].setScale(scaleX, scaleY);
+			_attack[i].setScale(scaleX, scaleY);
 		}
 
 		
@@ -53,8 +58,37 @@ public class Badboy extends GameActor{
 		
 		setY(100);
 		setX(500);
-		setScale(0.25f, 0.25f);
+		setSize(size, size);
+		setScale(scaleX, scaleY);
 		setAnimation(animationIdle);
+		moveLeft = true;
+		
+		GhostMoveAction gMoveAction = new  GhostMoveAction();
+		gMoveAction.setSpeed(3);
+		
+		addAction(gMoveAction);
+		setName("guaiwu");
+		setPadding(27, 13, 20, 20);
 	}
 
+	public float getSpeed(){
+		return speed;
+	}
+
+	@Override
+	public void draw(SpriteBatch batch, float parentAlpha) {
+		// TODO Auto-generated method stub
+		moveLeft = !moveLeft;
+		super.draw(batch, parentAlpha);
+		moveLeft = !moveLeft;
+	}
+
+	@Override
+	public boolean isHurt() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+	
+	
+	
 }

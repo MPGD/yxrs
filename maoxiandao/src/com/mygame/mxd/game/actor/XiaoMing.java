@@ -12,16 +12,19 @@ public class XiaoMing extends GameActor{
 	
 	public static String XIAOMING_IMG_SRC = "data/xiaoming.png";
 	private boolean isJump = false;
-	private float scale = 0.5f;
+	private float scaleX = 1f;
+	private float scaleY = 1f;
+	private int size = 81;
+	private boolean controllable = true;
 	
 	public XiaoMing(){
 		Texture temp = new Texture(XIAOMING_IMG_SRC);
 
 		// 加载关键帧动画
-		TextureRegion[] move = new TextureRegion(temp).split(128, 128)[0];
-		TextureRegion[] idle = new TextureRegion(temp).split(128, 128)[1];
-		TextureRegion[] hurt = new TextureRegion(temp).split(128, 128)[3];
-		TextureRegion[] attack = new TextureRegion(temp).split(128, 128)[4];
+		TextureRegion[] move = new TextureRegion(temp).split(size, size)[0];
+		TextureRegion[] idle = new TextureRegion(temp).split(size, size)[1];
+		TextureRegion[] hurt = new TextureRegion(temp).split(size, size)[3];
+		TextureRegion[] attack = new TextureRegion(temp).split(size, size)[4];
 		
 		Sprite [] _move = new Sprite[4];
 		Sprite [] _idle = new Sprite[4];
@@ -34,10 +37,10 @@ public class XiaoMing extends GameActor{
 			_hurt[i] = new Sprite(hurt[i]);
 			_attack[i] = new Sprite(attack[i]);
 			
-			_move[i].setScale(scale);
-			_idle[i].setScale(scale);
-			_hurt[i].setScale(scale);
-			_attack[i].setScale(scale);
+			_move[i].setScale(scaleX, scaleY);
+			_idle[i].setScale(scaleX, scaleY);
+			_hurt[i].setScale(scaleX, scaleY);
+			_attack[i].setScale(scaleX, scaleY);
 		}
 
 		
@@ -51,8 +54,11 @@ public class XiaoMing extends GameActor{
 				_attack[3]);
 		
 		setY(100);
-		setScale(0.25f, 0.25f);
+		setSize(size, size);
+		setScale(scaleX, scaleY);
 		setAnimation(animationIdle);
+		setName("xiaoming");
+		setPadding(17, 9, 17, 20);
 	}
 
 	@Override
@@ -62,10 +68,15 @@ public class XiaoMing extends GameActor{
 	}
 
 	
-	public void idle(){
-		setStatus(STATUS_IDLE);
-	}
+
 	
+	@Override
+	public void idle() {
+		// TODO Auto-generated method stub
+		super.idle();
+		controllable = true;
+	}
+
 	public void move(boolean left){
 		if(left){
 			moveLeft = true;
@@ -99,5 +110,18 @@ public class XiaoMing extends GameActor{
 	public void attack(){
 		setStatus(STATUS_ATTACK);
 	}
+
+	@Override
+	public boolean isHurt() {
+		// TODO Auto-generated method stub
+		return true;
+	}
 	
+	public void setControllable(boolean ctrl){
+		controllable = ctrl;
+	}
+	
+	public boolean getControllable(){
+		return controllable;
+	}
 }
