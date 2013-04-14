@@ -23,19 +23,19 @@ public abstract class AssetManagerSingleton {
 		}
 	}
 
-	public boolean checkRes(String fileName) {
+	public static boolean checkRes(String fileName) {
 		return manager.isLoaded(fileName);
 	}
 
-	public float getProgress() {
+	public static float getProgress() {
 		return manager.getProgress();
 	}
 
-	public int getQueued() {
+	public static int getQueued() {
 		return manager.getQueuedAssets();
 	}
 
-	public int getLoaded() {
+	public static int getLoaded() {
 		return manager.getLoadedAssets();
 	}
 
