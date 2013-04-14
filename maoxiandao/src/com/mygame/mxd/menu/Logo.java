@@ -46,13 +46,14 @@ public class Logo extends BaseScreen {
 		manager.load("data/menu/bt_newgame_up.png", Texture.class);
 
 		batch = new SpriteBatch();
-		texture = new Texture(Gdx.files.internal("data/menu/game_logo.png"));
-		texture2 = new Texture(Gdx.files.internal("data/menu/menu_bg.jpg"));
 
-		sprite = new Sprite(texture);
+		sprite = new Sprite(new Texture(
+				Gdx.files.internal("data/menu/game_logo.png")));
 		sprite.setPosition((DataSet.ScreenWidth - sprite.getWidth()) / 2,
 				(DataSet.ScreenHeight - sprite.getHeight()) / 2);
-		sprite2 = new Sprite(texture2, 420, 380, 800, 500);
+		sprite2 = new Sprite(new Texture(
+				Gdx.files.internal("data/menu/menu_bg.jpg")), 420, 380, 800,
+				500);
 
 		sprite2.setSize(DataSet.ScreenWidth, DataSet.ScreenHeight);
 
