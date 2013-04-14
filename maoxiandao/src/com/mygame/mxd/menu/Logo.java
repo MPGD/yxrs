@@ -90,8 +90,7 @@ public class Logo extends BaseScreen {
 	public void dispose() {
 		// TODO Auto-generated method stub
 		batch.dispose();
-		texture.dispose();
-		texture2.dispose();
+
 	}
 
 }

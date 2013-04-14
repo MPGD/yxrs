@@ -12,7 +12,7 @@ public class MXD extends Game {
 		DataSet.ScreenWidth = Gdx.graphics.getWidth();
 		DataSet.ScreenHeight = Gdx.graphics.getHeight();
 
-		// setScreen(new GameScreen(this));
+		 //setScreen(new GameScreen(this));
 		setScreen(new Logo(this));
 	}
 }
