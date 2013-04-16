@@ -21,7 +21,8 @@ public class GhostMoveAction extends Action{
 	public boolean act(float delta) {
 		// TODO Auto-generated method stub
 		if(!beginFlag) begin();
-		
+		if(ghost.getStatus() == ghost.STATUS_HURT)
+			return false;
 		if(ghost.getMoveLeft()){
 			ghost.setX(ghost.getX() - ghost.getSpeed());
 			if(ghost.getX() <= 0){

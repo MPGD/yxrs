@@ -31,21 +31,27 @@ public abstract class GameActor extends Actor{
 	public float paddingLeft = 0;
 	public float paddingRight = 0;
 	
+	private float aniTime = 0;
+	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
 		
-		float delta = ((GameStage) getStage()).getTime();
+		aniTime += ((GameStage) getStage()).getDelta();
+		float time = aniTime;
+		boolean aniLoop = true;
 		if(status == STATUS_MOVE){
 			animation = animationMove;
 		}else if(status == STATUS_ATTACK){
 			animation = animationAttack;
+			aniLoop = false;
+			Gdx.app.debug("xujihao", "time is " + time);
 		}else if(status == STATUS_HURT){
 			animation = animationHurt;
 		}else{
 			animation = animationIdle;
 		}
-		Sprite sprite = (Sprite)animation.getKeyFrame(delta, true);
+		Sprite sprite = (Sprite)animation.getKeyFrame(time, aniLoop);
 		sprite.setPosition(getX(), getY());
 		if(!moveLeft) sprite.setScale(Math.abs(sprite.getScaleX()) * -1, sprite.getScaleY());
 		else sprite.setScale(Math.abs(sprite.getScaleX()) * 1, sprite.getScaleY());
@@ -54,6 +60,7 @@ public abstract class GameActor extends Actor{
 	}
 	
 	abstract public boolean checkPostion();
+	/*有时候砍怪血量很少的时候，怪物并不会受伤，因此会继续前进*/
 	abstract public boolean isHurt();
 
 	public void setPadding(float paddingTop, float paddingBottom, float paddingLeft, float paddingRight){
@@ -85,6 +92,14 @@ public abstract class GameActor extends Actor{
 	
 	public int getStatus(){
 		return status;
+	}
+	
+	public void resetAniTime(){
+		aniTime = 0;
+	}
+	
+	public float getAniTime(){
+		return aniTime;
 	}
 }
  

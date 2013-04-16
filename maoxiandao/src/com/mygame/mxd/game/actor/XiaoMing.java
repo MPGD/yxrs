@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.mygame.mxd.game.DataSet;
@@ -12,6 +13,10 @@ public class XiaoMing extends GameActor{
 	
 	public static String XIAOMING_IMG_SRC = "data/xiaoming.png";
 	private boolean isJump = false;
+	//攻击条件保护，很多地方用到了这个判断，需要注意。
+	//在攻击的时候，人物的状态始终处在攻击状态
+	private boolean isAttack = false;
+	private float attackTime = 0.5f;
 	private float scaleX = 1f;
 	private float scaleY = 1f;
 	private int size = 81;
@@ -50,7 +55,7 @@ public class XiaoMing extends GameActor{
 				_idle[3]);
 		animationHurt = new Animation(0.1f, _hurt[0], _hurt[1], _hurt[2],
 				_hurt[3]);
-		animationAttack = new Animation(0.15f, _attack[0], _attack[1], _attack[2],
+		animationAttack = new Animation(0.14f, _attack[0], _attack[1], _attack[2],
 				_attack[3]);
 		
 		setY(100);
@@ -73,11 +78,15 @@ public class XiaoMing extends GameActor{
 	@Override
 	public void idle() {
 		// TODO Auto-generated method stub
+		if(isAttack) return;
+		
 		super.idle();
 		controllable = true;
 	}
 
 	public void move(boolean left){
+		if(isAttack && !isJump) return;
+		
 		if(left){
 			moveLeft = true;
 			setX(getX() - DataSet.MoveSpeed);
@@ -85,7 +94,8 @@ public class XiaoMing extends GameActor{
 			moveLeft = false;
 			setX(getX() + DataSet.MoveSpeed);
 		}
-		setStatus(STATUS_MOVE);
+		if(!isAttack)
+			setStatus(STATUS_MOVE);
 	}
 	
 	public void jump(){
@@ -103,14 +113,43 @@ public class XiaoMing extends GameActor{
 			}
 		});
 		addAction(Actions.sequence(jumpAction, resetJump));
-		setStatus(STATUS_JUMP);
+		if(!isAttack)
+			setStatus(STATUS_JUMP);
 		isJump = true;
 	}
 	
 	public void attack(){
+		if(isAttack) return;
+		
+		resetAniTime();
+		RunnableAction resetAttack = Actions.run(new Runnable(){
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				isAttack = false;
+			}
+		});
+		addAction(Actions.sequence(Actions.delay(attackTime), resetAttack));
 		setStatus(STATUS_ATTACK);
+		isAttack = true;
 	}
 
+	public Rectangle getAttackArea(){
+		Rectangle ret = new Rectangle();
+		if(moveLeft){
+			ret.x = getX() - 60;
+			ret.y = getY();
+			ret.width = 60;
+			ret.height = 60;
+		}else{
+			ret.x = getX() + size * scaleX;
+			ret.y = getY();
+			ret.width = 60;
+			ret.height = 60;
+		}
+		return ret;
+	}
+	
 	@Override
 	public boolean isHurt() {
 		// TODO Auto-generated method stub

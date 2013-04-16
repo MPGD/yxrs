@@ -8,7 +8,7 @@ import com.badlogic.gdx.utils.Logger;
 
 /** 相当于游戏世界，可以方便的添加actor,而actor可以方便的实现一些动画 */
 public class GameStage extends Stage {
-	private float mTime = 0;
+	private float mDelta = 0;
 	private GameScene currScene = null;
 	
 	public GameStage(float width, float height, boolean keepAspectRatio) {
@@ -23,11 +23,11 @@ public class GameStage extends Stage {
 	}
 
 	public void update(float delta) {
-		mTime += delta;
+		mDelta = delta;
 	}
 	
-	public float getTime(){
-		return mTime;
+	public float getDelta(){
+		return mDelta;
 	}
 
 	public void setScene(GameScene scene){
