@@ -6,6 +6,9 @@ import com.badlogic.gdx.utils.Disposable;
 public class GameScene implements Disposable{
 	private Texture background = null;
 	
+	public GameScene(String path){
+		background = new Texture(path);
+	}
 	
 	public void setTexture(String path){
 		background = new Texture(path);

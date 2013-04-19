@@ -16,7 +16,7 @@ public class GameAccidentDetect {
 	private boolean needControl = true;
 	private boolean hurtLeft = false;
 	public GameAccidentDetect(GameScreen gameScreen) {
-		mGameStage = gameScreen.getGameStage();
+		mGameStage = gameScreen.getGameLevel().getGameStage();
 		xiaoming = gameScreen.getXiaoMing();
 	}
 

@@ -56,8 +56,8 @@ public class Badboy extends GameActor{
 		animationAttack = new Animation(0.15f, _attack[0], _attack[1], _attack[2],
 				_attack[3]);
 		
-		setY(100);
-		setX(500);
+		//setY(100);
+		//setX(500);
 		setSize(size, size);
 		setScale(scaleX, scaleY);
 		setAnimation(animationIdle);

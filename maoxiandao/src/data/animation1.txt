@@ -1,0 +1,2 @@
+total 8
+box1 box2 box3 box4 rotate 0.5 180 x box1 box2 box3 box4

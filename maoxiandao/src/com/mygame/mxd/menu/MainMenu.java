@@ -48,9 +48,9 @@ public class MainMenu extends BaseScreen {
 		batch = new SpriteBatch();
 		stage = new GameStage(DataSet.ScreenWidth, DataSet.ScreenHeight, true);
 
-		GameScene gameScene = new GameScene();
-		gameScene.setTexture("data/menu/menu_bg2.png");
-		stage.setScene(gameScene);
+//		GameScene gameScene = new GameScene();
+//		gameScene.setTexture("data/menu/menu_bg2.png");
+//		stage.setScene(gameScene);
 
 		backgroundMusic = AssetManagerSingleton.manager
 				.get("data/audio/FairyTalediffvers.mp3");

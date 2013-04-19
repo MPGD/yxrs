@@ -5,35 +5,28 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.mygame.mxd.game.DataSet;
+import com.mygame.mxd.game.GameLevel;
 import com.mygame.mxd.game.GameScene;
 import com.mygame.mxd.game.GameStage;
 import com.mygame.mxd.game.actor.Badboy;
 import com.mygame.mxd.game.actor.GameAccidentDetect;
 import com.mygame.mxd.game.actor.GameController;
 import com.mygame.mxd.game.actor.XiaoMing;
+import com.mygame.mxd.game.utils.LevelLoader;
 
 public class GameScreen extends BaseScreen {
-	private GameStage gs;
 	private GameController mGameCtrl;
 	private XiaoMing xiaoming;
 	private GameAccidentDetect mGameAccidentDetect;
-
+	private GameLevel mGameLevel;
 	public GameScreen(Game game) {
 		super(game);
 	}
 
 	@Override
 	public void show() {
-		gs = new GameStage(DataSet.ScreenWidth, DataSet.ScreenHeight, true);
-		GameScene gameScene = new GameScene();
-		gameScene.setTexture("data/bg.jpg");
-		gs.setScene(gameScene);
 		xiaoming = new XiaoMing();
-		gs.addActor(xiaoming);
-
-		Badboy bd = new Badboy();
-		gs.addActor(bd);
-
+		mGameLevel = LevelLoader.load(this, "data/level/level1.conf");
 		mGameCtrl = new GameController(xiaoming);
 		mGameAccidentDetect = new GameAccidentDetect(this);
 	}
@@ -44,9 +37,7 @@ public class GameScreen extends BaseScreen {
 		mGameAccidentDetect.detect();
 		if (mGameAccidentDetect.isNeedControl())
 			mGameCtrl.process();
-		gs.act(delta);
-		gs.update(delta);
-		gs.draw();
+		mGameLevel.render(delta);
 	}
 
 	@Override
@@ -56,15 +47,15 @@ public class GameScreen extends BaseScreen {
 
 	@Override
 	public void dispose() {
-		gs.dispose();
+		mGameLevel.dispose();
 	}
 
-	public GameStage getGameStage() {
-		return gs;
-	}
 
 	public XiaoMing getXiaoMing() {
 		return xiaoming;
 	}
 
+	public GameLevel getGameLevel(){
+		return mGameLevel;
+	}
 }
