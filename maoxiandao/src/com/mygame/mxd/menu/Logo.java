@@ -80,10 +80,6 @@ public class Logo extends BaseScreen {
 		sprite.setColor(1, 1, 1, 201 - alpha);
 		time++;
 
-		Gdx.app.debug("xue", "QueuedAssets:" + manager.getQueuedAssets());
-		Gdx.app.debug("xue", "LoadedAssets:" + manager.getLoadedAssets());
-		Gdx.app.debug("xue", "Progress:" + manager.getProgress());
-
 		if (manager.update() && time > 400) {
 			this.dispose();
 			super.game.setScreen(new Progress(super.game, assetList, "com.mygame.mxd.menu.MainMenu"));
@@ -96,5 +92,4 @@ public class Logo extends BaseScreen {
 		batch.dispose();
 
 	}
-
 }
