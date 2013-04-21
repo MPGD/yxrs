@@ -1,8 +1,10 @@
 package com.mygame.mxd.game;
 
+import java.util.List;
+
 import com.badlogic.gdx.assets.AssetManager;
 
-public abstract class AssetManagerSingleton {
+public class AssetManagerSingleton {
 
 	public static AssetManager manager;
 
@@ -14,4 +16,11 @@ public abstract class AssetManagerSingleton {
 		return manager;
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
+	public static void LoadResource(List<Asset> list) {
+		manager = getManager();
+		for (Asset asset : list) {
+			manager.load(asset.getFile(), asset.getType());
+		}
+	}
 }

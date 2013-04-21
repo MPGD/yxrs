@@ -1,5 +1,7 @@
 package com.mygame.mxd.menu;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -10,6 +12,7 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mygame.mxd.game.Asset;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
 import com.mygame.mxd.screens.BaseScreen;
@@ -17,8 +20,7 @@ import com.mygame.mxd.screens.BaseScreen;
 public class Logo extends BaseScreen {
 
 	private SpriteBatch batch;
-	private Texture texture;
-	private Texture texture2;
+
 	private Sprite sprite;
 	private Sprite sprite2;
 	private int time = 0;
@@ -27,33 +29,35 @@ public class Logo extends BaseScreen {
 
 	private AssetManager manager;
 
+	@SuppressWarnings("rawtypes")
+	private ArrayList<Asset> assetList;
+
 	public Logo(Game game) {
 		super(game);
 		// TODO Auto-generated constructor stub
 	}
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
 
 		manager = AssetManagerSingleton.getManager();
+		assetList = new ArrayList<Asset>();
 
-		manager.load("data/audio/FairyTalediffvers.mp3", Music.class);
-		manager.load("data/audio/BtMouseClick.mp3", Sound.class);
-		manager.load("data/audio/BtMouseOver.mp3", Sound.class);
-		manager.load("data/audio/CharSelect.mp3", Sound.class);
-		manager.load("data/menu/bt_newgame_down.png", Texture.class);
-		manager.load("data/menu/bt_newgame_up.png", Texture.class);
+		assetList.add(new Asset("data/audio/FairyTalediffvers.mp3", Music.class));
+		assetList.add(new Asset("data/audio/BtMouseClick.mp3", Sound.class));
+		assetList.add(new Asset("data/audio/BtMouseOver.mp3", Sound.class));
+		assetList.add(new Asset("data/audio/CharSelect.mp3", Sound.class));
+		assetList.add(new Asset("data/menu/bt_newgame_down.png", Texture.class));
+		assetList.add(new Asset("data/menu/bt_newgame_up.png", Texture.class));
 
 		batch = new SpriteBatch();
 
-		sprite = new Sprite(new Texture(
-				Gdx.files.internal("data/menu/game_logo.png")));
+		sprite = new Sprite(new Texture(Gdx.files.internal("data/menu/game_logo.png")));
 		sprite.setPosition((DataSet.ScreenWidth - sprite.getWidth()) / 2,
 				(DataSet.ScreenHeight - sprite.getHeight()) / 2);
-		sprite2 = new Sprite(new Texture(
-				Gdx.files.internal("data/menu/menu_bg.jpg")), 420, 380, 800,
-				500);
+		sprite2 = new Sprite(new Texture(Gdx.files.internal("data/menu/menu_bg.jpg")), 420, 380, 800, 500);
 
 		sprite2.setSize(DataSet.ScreenWidth, DataSet.ScreenHeight);
 
@@ -82,7 +86,7 @@ public class Logo extends BaseScreen {
 
 		if (manager.update() && time > 400) {
 			this.dispose();
-			super.game.setScreen(new MainMenu(super.game));
+			super.game.setScreen(new Progress(super.game, assetList, "com.mygame.mxd.menu.MainMenu"));
 		}
 	}
 

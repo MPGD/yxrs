@@ -6,7 +6,8 @@ public class DataSet {
 	public static int ScreenWidth = 800;
 
 	// 游戏音乐默认等级
-	public static float AudioVolume = 1.0f;
+	public static float AUDIO_VOLUME = 1.0f;
+	public static boolean AUDIO_STATUS=true;
 
 	// 游戏行为
 
