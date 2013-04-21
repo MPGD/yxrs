@@ -6,18 +6,19 @@ import java.util.ArrayList;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.graphics.GL10;
-import com.mygame.mxd.game.Asset;
+import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
 import com.mygame.mxd.screens.BaseScreen;
 
 public class Progress extends BaseScreen {
 
-	private MenuStage stage;
+	private Stage stage;
 	private ProgressBar bar;
 	@SuppressWarnings("rawtypes")
-	private ArrayList<Asset> AssetList;
+	private ArrayList<AssetDescriptor> AssetList;
 	private String className;
 	private Screen screen;
 	private int skip = 0;
@@ -28,7 +29,7 @@ public class Progress extends BaseScreen {
 	}
 
 	@SuppressWarnings("rawtypes")
-	public Progress(Game game, ArrayList<Asset> AssetList, String className) {
+	public Progress(Game game, ArrayList<AssetDescriptor> AssetList, String className) {
 		super(game);
 		this.AssetList = AssetList;
 		this.className = className;
@@ -37,7 +38,7 @@ public class Progress extends BaseScreen {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub.
-		stage = new MenuStage(DataSet.ScreenWidth, DataSet.ScreenHeight, true);
+		stage = new Stage(DataSet.ScreenWidth, DataSet.ScreenHeight, true);
 		bar = new ProgressBar(0, 0);
 		stage.addActor(bar);
 		AssetManagerSingleton.LoadResource(AssetList);
@@ -47,6 +48,7 @@ public class Progress extends BaseScreen {
 	public void render(float delta) {
 		// TODO Auto-generated method stub
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
+
 		stage.draw();
 		Gdx.app.debug("xue", "XXXXXXXXXXXXXXXXXXXXXXXXX:" + AssetManagerSingleton.manager.getProgress() * 100);
 		if (AssetManagerSingleton.manager.update()) {

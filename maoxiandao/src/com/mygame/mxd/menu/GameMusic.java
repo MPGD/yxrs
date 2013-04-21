@@ -6,14 +6,14 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.utils.Disposable;
 import com.mygame.mxd.game.DataSet;
 
-public class BackgroundMusic {
+public class GameMusic {
 	private static Music BGMusic;
 	private static boolean loop = true;
 	private static float volume = DataSet.AUDIO_VOLUME;
 
 	public static void setBackgroundMusic(Music music) {
 		if (BGMusic == null) {
-			BackgroundMusic.BGMusic = music;
+			GameMusic.BGMusic = music;
 		}
 	}
 
@@ -28,11 +28,11 @@ public class BackgroundMusic {
 	}
 
 	public static void setLoop(boolean loop) {
-		BackgroundMusic.loop = loop;
+		GameMusic.loop = loop;
 	}
 
 	public static void setVolume(float volume) {
-		BackgroundMusic.volume = volume;
+		GameMusic.volume = volume;
 	}
 
 	public static void dispose() {

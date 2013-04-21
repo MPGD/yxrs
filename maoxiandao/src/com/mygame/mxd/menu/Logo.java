@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
@@ -12,7 +13,6 @@ import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mygame.mxd.game.Asset;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
 import com.mygame.mxd.screens.BaseScreen;
@@ -30,7 +30,7 @@ public class Logo extends BaseScreen {
 	private AssetManager manager;
 
 	@SuppressWarnings("rawtypes")
-	private ArrayList<Asset> assetList;
+	private ArrayList<AssetDescriptor> assetList;
 
 	public Logo(Game game) {
 		super(game);
@@ -43,14 +43,14 @@ public class Logo extends BaseScreen {
 		// TODO Auto-generated method stub
 
 		manager = AssetManagerSingleton.getManager();
-		assetList = new ArrayList<Asset>();
+		assetList = new ArrayList<AssetDescriptor>();
 
-		assetList.add(new Asset("data/audio/FairyTalediffvers.mp3", Music.class));
-		assetList.add(new Asset("data/audio/BtMouseClick.mp3", Sound.class));
-		assetList.add(new Asset("data/audio/BtMouseOver.mp3", Sound.class));
-		assetList.add(new Asset("data/audio/CharSelect.mp3", Sound.class));
-		assetList.add(new Asset("data/menu/bt_newgame_down.png", Texture.class));
-		assetList.add(new Asset("data/menu/bt_newgame_up.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/audio/FairyTalediffvers.mp3", Music.class));
+		assetList.add(new AssetDescriptor("data/audio/BtMouseClick.mp3", Sound.class));
+		assetList.add(new AssetDescriptor("data/audio/BtMouseOver.mp3", Sound.class));
+		assetList.add(new AssetDescriptor("data/audio/CharSelect.mp3", Sound.class));
+		assetList.add(new AssetDescriptor("data/menu/bt_newgame_down.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/bt_newgame_up.png", Texture.class));
 
 		batch = new SpriteBatch();
 

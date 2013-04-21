@@ -3,6 +3,7 @@ package com.mygame.mxd.menu;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
@@ -31,7 +32,7 @@ public class MainMenu extends BaseScreen {
 
 	private NinePatch ninePatch;
 
-	// private Music backgroundMusic;
+	private Sound sound;
 
 	public MainMenu(Game game) {
 		super(game);
@@ -42,10 +43,8 @@ public class MainMenu extends BaseScreen {
 	public void show() {
 		// TODO Auto-generated method stub
 		batch = new SpriteBatch();
-		BackgroundMusic.setBackgroundMusic((Music) AssetManagerSingleton.manager
-				.get("data/audio/FairyTalediffvers.mp3"));
-		BackgroundMusic.play();
-
+		GameMusic.setBackgroundMusic((Music) AssetManagerSingleton.manager.get("data/audio/FairyTalediffvers.mp3"));
+		GameMusic.play();
 		stage = new MenuStage(DataSet.ScreenWidth, DataSet.ScreenHeight, true);
 
 		Drawable newgame_up = new TextureRegionDrawable(new TextureRegion(
@@ -60,7 +59,7 @@ public class MainMenu extends BaseScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				// TODO Auto-generated method stub
-				BackgroundMusic.stop();
+				GameMusic.stop();
 				game.dispose();
 				game.setScreen(new GameScreen(game));
 			}
@@ -87,7 +86,7 @@ public class MainMenu extends BaseScreen {
 		Gdx.app.debug("xue", "mainmenu resource begin dispose");
 		texture.dispose();
 		batch.dispose();
-		BackgroundMusic.dispose();
+		GameMusic.dispose();
 		AssetManagerSingleton.manager.clear();
 		Gdx.app.debug("xue", "mainmenu resource disposed");
 	}
