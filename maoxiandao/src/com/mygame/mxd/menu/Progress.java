@@ -20,6 +20,7 @@ public class Progress extends BaseScreen {
 	private ArrayList<Asset> AssetList;
 	private String className;
 	private Screen screen;
+	private int skip = 0;
 
 	public Progress(Game game) {
 		super(game);
@@ -47,35 +48,42 @@ public class Progress extends BaseScreen {
 		// TODO Auto-generated method stub
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.draw();
-		if (!AssetManagerSingleton.manager.update()) {
-			bar.setProgress(AssetManagerSingleton.manager.getProgress() * 100);
-		} else {
-			try {
-				screen = (Screen) Class.forName(className).getConstructor(Game.class).newInstance(game);
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (InvocationTargetException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (NoSuchMethodException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+		Gdx.app.debug("xue", "XXXXXXXXXXXXXXXXXXXXXXXXX:" + AssetManagerSingleton.manager.getProgress() * 100);
+		if (AssetManagerSingleton.manager.update()) {
+			skip++;
+			Gdx.app.debug("xue", "ZZZZZZZZZZZZZZZZZZZZZZZ:" + AssetManagerSingleton.manager.getProgress() * 100);
+
+			if (screen == null) {
+				try {
+					screen = (Screen) Class.forName(className).getConstructor(Game.class).newInstance(game);
+				} catch (IllegalArgumentException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (SecurityException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InstantiationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (InvocationTargetException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (NoSuchMethodException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
-			game.setScreen(screen);
+			if (skip == 3) {
+				game.setScreen(screen);
+			}
 		}
+		bar.setProgress(AssetManagerSingleton.manager.getProgress() * 100);
 	}
 
 	@Override
