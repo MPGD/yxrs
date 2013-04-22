@@ -7,7 +7,7 @@ public class DataSet {
 
 	// 游戏音乐默认等级
 	public static float AUDIO_VOLUME = 1.0f;
-	public static boolean AUDIO_STATUS=true;
+	public static boolean AUDIO_TOGGLE=true;
 
 	// 游戏行为
 

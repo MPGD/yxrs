@@ -49,8 +49,12 @@ public class Logo extends BaseScreen {
 		assetList.add(new AssetDescriptor("data/audio/BtMouseClick.mp3", Sound.class));
 		assetList.add(new AssetDescriptor("data/audio/BtMouseOver.mp3", Sound.class));
 		assetList.add(new AssetDescriptor("data/audio/CharSelect.mp3", Sound.class));
-		assetList.add(new AssetDescriptor("data/menu/bt_newgame_down.png", Texture.class));
-		assetList.add(new AssetDescriptor("data/menu/bt_newgame_up.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/btn_start_down.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/btn_start_up.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/btn_settings_up.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/btn_settings_down.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/btn_more_up.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/btn_more_down.png", Texture.class));
 
 		batch = new SpriteBatch();
 

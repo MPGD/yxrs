@@ -18,6 +18,9 @@ public class GameMusic {
 	}
 
 	public static void play() {
+		if (DataSet.AUDIO_TOGGLE == false) {
+			return;
+		}
 		BGMusic.setLooping(true);
 		BGMusic.setVolume(DataSet.AUDIO_VOLUME);
 		BGMusic.play();

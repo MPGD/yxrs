@@ -22,9 +22,8 @@ import com.mygame.mxd.screens.GameScreen;
 
 public class MainMenu extends BaseScreen {
 
-	private Texture texture;
-
 	private Button btn_start;
+	private Button btn_settings;
 	private Button btn_more;
 
 	private MenuStage stage;
@@ -45,26 +44,39 @@ public class MainMenu extends BaseScreen {
 		batch = new SpriteBatch();
 		GameMusic.setBackgroundMusic((Music) AssetManagerSingleton.manager.get("data/audio/FairyTalediffvers.mp3"));
 		GameMusic.play();
+		GameSound.setSound((Sound) AssetManagerSingleton.manager.get("data/audio/BtMouseOver.mp3"));
 		stage = new MenuStage(DataSet.ScreenWidth, DataSet.ScreenHeight, true);
 
-		Drawable newgame_up = new TextureRegionDrawable(new TextureRegion(
-				(Texture) AssetManagerSingleton.manager.get("data/menu/bt_newgame_up.png")));
+		Drawable start_up = new TextureRegionDrawable(new TextureRegion(
+				(Texture) AssetManagerSingleton.manager.get("data/menu/btn_start_up.png")));
+		Drawable start_down = new TextureRegionDrawable(new TextureRegion(
+				(Texture) AssetManagerSingleton.manager.get("data/menu/btn_start_down.png")));
+		Drawable settings_up = new TextureRegionDrawable(new TextureRegion(
+				(Texture) AssetManagerSingleton.manager.get("data/menu/btn_settings_up.png")));
+		Drawable settings_down = new TextureRegionDrawable(new TextureRegion(
+				(Texture) AssetManagerSingleton.manager.get("data/menu/btn_settings_down.png")));
+		Drawable more_up = new TextureRegionDrawable(new TextureRegion(
+				(Texture) AssetManagerSingleton.manager.get("data/menu/btn_more_up.png")));
+		Drawable more_down = new TextureRegionDrawable(new TextureRegion(
+				(Texture) AssetManagerSingleton.manager.get("data/menu/btn_more_down.png")));
 
-		Drawable newgame_down = new TextureRegionDrawable(new TextureRegion(
-				(Texture) AssetManagerSingleton.manager.get("data/menu/bt_newgame_down.png")));
+		btn_start = new Button(start_up, start_down);
+		btn_settings = new Button(settings_up, settings_down);
+		btn_more = new Button(more_up, more_down);
 
-		btn_start = new Button(newgame_up, newgame_down);
-		btn_start.setPosition(200, 200);
-		btn_start.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-				// TODO Auto-generated method stub
-				GameMusic.stop();
-				game.dispose();
-				game.setScreen(new GameScreen(game));
-			}
-		});
+		btn_start.addListener(click);
+		btn_settings.addListener(click);
+		btn_more.addListener(click);
+
+		btn_start.setPosition((DataSet.ScreenWidth - btn_start.getWidth()) / 2, DataSet.ScreenHeight / 2);
+		btn_settings.setPosition((DataSet.ScreenWidth - btn_settings.getWidth()) / 2,
+				btn_start.getY() - btn_start.getHeight() - 10);
+		btn_more.setPosition((DataSet.ScreenWidth - btn_more.getWidth()) / 2,
+				btn_settings.getY() - btn_start.getHeight() - 10);
+
 		stage.addActor(btn_start);
+		stage.addActor(btn_settings);
+		stage.addActor(btn_more);
 
 		TextureRegion tr = new TextureRegion(new Texture("data/menu/block.png"));
 		ninePatch = new NinePatch(tr, tr, tr, tr, tr, tr, tr, tr, tr);
@@ -75,19 +87,41 @@ public class MainMenu extends BaseScreen {
 		// TODO Auto-generated method stub
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.draw();
-		batch.begin();
-		ninePatch.draw(batch, 100, 100, 159, 159);
-		batch.end();
+		// batch.begin();
+		// ninePatch.draw(batch, 100, 100, 159, 159);
+		// batch.end();
 	}
 
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub
 		Gdx.app.debug("xue", "mainmenu resource begin dispose");
-		texture.dispose();
 		batch.dispose();
 		GameMusic.dispose();
 		AssetManagerSingleton.manager.clear();
 		Gdx.app.debug("xue", "mainmenu resource disposed");
 	}
+
+	private ClickListener click = new ClickListener() {
+		@Override
+		public void clicked(InputEvent event, float x, float y) {
+			// TODO Auto-generated method stub
+			// super.clicked(event, x, y);
+			if (event.getListenerActor() == btn_start) {
+				GameSound.play(GameSound.PRESS);
+				game.dispose();
+				
+				game.setScreen(new GameScreen(game));
+				return;
+			}
+			if (event.getListenerActor() == btn_settings) {
+				GameSound.play(GameSound.PRESS);
+				return;
+			}
+			if (event.getListenerActor() == btn_more) {
+				GameSound.play(GameSound.PRESS);
+				return;
+			}
+		}
+	};
 }

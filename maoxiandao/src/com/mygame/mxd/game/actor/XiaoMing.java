@@ -130,7 +130,6 @@ public class XiaoMing extends GameActor{
 				}
 				attackEffect.draw(batch, parentAlpha);
 			}
-			
 		}
 	}
 

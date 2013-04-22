@@ -17,8 +17,8 @@ public class GameSound {
 
 	public static void setSound(Sound... sounds) {
 		GameSound.press = sounds[0];
-		GameSound.select = sounds[1];
-		GameSound.change = sounds[2];
+		//GameSound.select = sounds[1];
+		//GameSound.change = sounds[2];
 	}
 
 	public static void setVolume(float volume) {
@@ -26,6 +26,9 @@ public class GameSound {
 	}
 
 	public static void play(int soundType) {
+		if (DataSet.AUDIO_TOGGLE==false){
+			return;
+		}
 		switch (soundType) {
 		case PRESS:
 			press.play(volume);

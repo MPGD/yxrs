@@ -50,10 +50,10 @@ public class Progress extends BaseScreen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 
 		stage.draw();
-		Gdx.app.debug("xue", "XXXXXXXXXXXXXXXXXXXXXXXXX:" + AssetManagerSingleton.manager.getProgress() * 100);
+		//Gdx.app.debug("xue", "XXXXXXXXXXXXXXXXXXXXXXXXX:" + AssetManagerSingleton.manager.getProgress() * 100);
 		if (AssetManagerSingleton.manager.update()) {
 			skip++;
-			Gdx.app.debug("xue", "ZZZZZZZZZZZZZZZZZZZZZZZ:" + AssetManagerSingleton.manager.getProgress() * 100);
+			//Gdx.app.debug("xue", "ZZZZZZZZZZZZZZZZZZZZZZZ:" + AssetManagerSingleton.manager.getProgress() * 100);
 
 			if (screen == null) {
 				try {
