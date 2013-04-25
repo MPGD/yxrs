@@ -2,6 +2,7 @@ package com.mygame.mxd.game.actor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
+import com.mygame.mxd.game.DataSet;
 /** 保持受伤状态持续一秒*/
 public class HurtAction extends Action{
 	private boolean beginFlag = false;
@@ -25,11 +26,16 @@ public class HurtAction extends Action{
 		boolean moveLeft = gActor.getMoveLeft();
 		gActor.setStatus(GameActor.STATUS_HURT);
 		if(hurtLeft){
-			gActor.setX(gActor.getX() - 3);
+			gActor.setRealX(gActor.getRealX() - 3);
 		}else{
-			gActor.setX(gActor.getX() + 3);
+			gActor.setRealX(gActor.getRealX() + 3);
 		}
 		
+		if(gActor.getRealX() < 0){
+			gActor.setRealX(0);
+		}else if(gActor.getRealX() > DataSet.ScreenWidth - gActor.getRealWidth()){
+			gActor.setRealX(DataSet.ScreenWidth - gActor.getRealWidth());
+		}
 		if(time - delta > 0.5) {
 			gActor.idle();
 			return true;

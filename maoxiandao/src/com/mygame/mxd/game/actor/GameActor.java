@@ -5,6 +5,8 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.mygame.mxd.game.Debug;
+import com.mygame.mxd.game.GameLevel;
 import com.mygame.mxd.game.GameStage;
 
 public abstract class GameActor extends Actor{
@@ -14,7 +16,9 @@ public abstract class GameActor extends Actor{
 	public static int STATUS_ATTACK = -3;
 	public static int STATUS_HURT = -4;
 	public static int STATUS_MAGIC = -5;
+	public static int STATUS_DIE = -6;
 	
+	public GameLevel mGameLevel;
 	protected boolean moveLeft = false;
 	protected Animation animationMove = null;
 	protected Animation animationAttack = null;
@@ -30,13 +34,15 @@ public abstract class GameActor extends Actor{
 	public float paddingBottom = 0;
 	public float paddingLeft = 0;
 	public float paddingRight = 0;
-	
 	private float aniTime = 0;
+	private float transparency = 1;
 	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
-		
+		if(checkPostion()){
+			checkPostionCallBack();
+		}
 		aniTime += ((GameStage) getStage()).getDelta();
 		float time = aniTime;
 		boolean aniLoop = true;
@@ -45,13 +51,15 @@ public abstract class GameActor extends Actor{
 		}else if(status == STATUS_ATTACK){
 			animation = animationAttack;
 			aniLoop = false;
-			Gdx.app.debug("xujihao", "time is " + time);
 		}else if(status == STATUS_HURT){
 			animation = animationHurt;
+		}else if(status == STATUS_DIE){
+			animation = animationIdle;
 		}else{
 			animation = animationIdle;
 		}
 		Sprite sprite = (Sprite)animation.getKeyFrame(time, aniLoop);
+		sprite.setColor(1, 1, 1, transparency);
 		sprite.setPosition(getX(), getY());
 		if(!moveLeft) sprite.setScale(Math.abs(sprite.getScaleX()) * -1, sprite.getScaleY());
 		else sprite.setScale(Math.abs(sprite.getScaleX()) * 1, sprite.getScaleY());
@@ -59,6 +67,7 @@ public abstract class GameActor extends Actor{
 		sprite.draw(batch, parentAlpha);
 	}
 	
+	abstract public void checkPostionCallBack();
 	abstract public boolean checkPostion();
 	/*有时候砍怪血量很少的时候，怪物并不会受伤，因此会继续前进*/
 	abstract public boolean isHurt();
@@ -100,6 +109,59 @@ public abstract class GameActor extends Actor{
 	
 	public float getAniTime(){
 		return aniTime;
+	}
+	
+	public float getRealX(){
+		float ret;
+		if(moveLeft){
+			ret = getX() + paddingLeft;
+		}else{
+			ret = getX() + paddingRight;
+		}
+		return ret;
+	}
+	
+	public float getRealY(){
+		float ret;
+		ret = getY() + paddingBottom;
+		return ret;
+	}
+	
+	public void setRealX(float x){
+		if(moveLeft){
+			setX(x- paddingLeft);
+		}else{
+			setX(x- paddingRight);
+		}
+	}
+	
+	public void setRealY(float y){
+		setY(y- paddingBottom);
+	}
+	
+	public void setRealPosition(float x, float y){
+		setRealX(x);
+		setRealY(y);
+	}
+	
+	public float getRealWidth(){
+		return (getWidth() - paddingLeft - paddingRight) * getScaleX();
+	}
+	
+	public float getRealHeight(){
+		return (getHeight() - paddingTop - paddingBottom) * getScaleY();
+	}
+	
+	public void setGameLevel(GameLevel gameLevel){
+		this.mGameLevel = gameLevel;
+	}
+	
+	public void setTransparency(float trans){
+		transparency = trans;
+	}
+	
+	public float getTransparency(){
+		return transparency;
 	}
 }
  

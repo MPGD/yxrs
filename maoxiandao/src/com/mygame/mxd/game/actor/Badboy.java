@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygame.mxd.game.GameLevel;
 
 public class Badboy extends GameActor{
 	
@@ -14,6 +15,12 @@ public class Badboy extends GameActor{
 	private float speed = 2;
 	private int size = 81;
 	
+	//战斗属性
+	public float hpTotal = 100;
+	public float hpCurr = 100;
+	public float damage = 5;
+	public float defense = 5;
+	public float loseHp = 0;
 	@Override
 	public boolean checkPostion() {
 		// TODO Auto-generated method stub
@@ -69,6 +76,8 @@ public class Badboy extends GameActor{
 		addAction(gMoveAction);
 		setName("guaiwu");
 		setPadding(27, 13, 20, 20);
+		
+		
 	}
 
 	public float getSpeed(){
@@ -86,9 +95,21 @@ public class Badboy extends GameActor{
 	@Override
 	public boolean isHurt() {
 		// TODO Auto-generated method stub
-		return true;
+		loseHp = mGameLevel.getGameScreen().getXiaoMing().getAttackDamage();
+		if(loseHp > hpTotal * 0.15f) return true;
+		return false;
+	}
+
+	@Override
+	public void checkPostionCallBack() {
+		// TODO Auto-generated method stub
+		
 	}
 	
+	public boolean isDied(){
+		if(hpCurr < 0) return true;
+		return false;
+	}
 	
 	
 }

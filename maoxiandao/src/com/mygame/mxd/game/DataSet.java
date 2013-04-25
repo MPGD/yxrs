@@ -15,6 +15,6 @@ public class DataSet {
 
 	// 主角
 	public static float MoveSpeed = 3;
-	public static float JumpV = 500;
-	public static float Gravity = 1200;
+	public static float JumpV = 600;
+	public static float Gravity = 2000;
 }
