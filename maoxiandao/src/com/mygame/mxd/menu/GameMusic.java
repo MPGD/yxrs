@@ -1,44 +1,48 @@
 package com.mygame.mxd.menu;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.scenes.scene2d.Action;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Disposable;
+
 import com.mygame.mxd.game.DataSet;
 
 public class GameMusic {
-	private static Music BGMusic;
-	private static boolean loop = true;
-	private static float volume = DataSet.AUDIO_VOLUME;
+	private Music BGMusic;
+	private boolean loop = true;
+	private float volume = DataSet.SOUND_VOLUME;
 
-	public static void setBackgroundMusic(Music music) {
-		if (BGMusic == null) {
-			GameMusic.BGMusic = music;
-		}
+	public GameMusic(Music music) {
+		this.BGMusic = music;
 	}
 
-	public static void play() {
-		if (DataSet.AUDIO_TOGGLE == false) {
+	public void play() {
+		if (volume == 0) {
 			return;
 		}
 		BGMusic.setLooping(true);
-		BGMusic.setVolume(DataSet.AUDIO_VOLUME);
+		BGMusic.setVolume(volume);
 		BGMusic.play();
 	}
 
-	public static void stop() {
-		BGMusic.stop();
+	public void rePlay() {
+		if (BGMusic.isPlaying()) {
+			stop();
+		}
+		play();
 	}
 
-	public static void setLoop(boolean loop) {
-		GameMusic.loop = loop;
+	public void stop() {
+		this.BGMusic.stop();
 	}
 
-	public static void setVolume(float volume) {
-		GameMusic.volume = volume;
+	public void setLoop(boolean loop) {
+		this.loop = loop;
 	}
 
-	public static void dispose() {
+	public void setVolume(float volume) {
+		this.volume = volume;
+	}
+
+	public void dispose() {
 		if (BGMusic != null) {
 			if (BGMusic.isPlaying()) {
 				BGMusic.stop();

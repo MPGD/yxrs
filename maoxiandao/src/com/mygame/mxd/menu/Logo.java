@@ -55,6 +55,13 @@ public class Logo extends BaseScreen {
 		assetList.add(new AssetDescriptor("data/menu/btn_settings_down.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/menu/btn_more_up.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/menu/btn_more_down.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/menu_bg2.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/seekbar.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/snail.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/button1_480.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/button2_480.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/game_logo.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/shadow.png", Texture.class));
 
 		batch = new SpriteBatch();
 
@@ -84,7 +91,7 @@ public class Logo extends BaseScreen {
 		sprite.setColor(1, 1, 1, 201 - alpha);
 		time++;
 
-		if (manager.update() && time > 400) {
+		if (manager.update() ) {
 			this.dispose();
 			super.game.setScreen(new Progress(super.game, assetList, "com.mygame.mxd.menu.MainMenu"));
 		}
