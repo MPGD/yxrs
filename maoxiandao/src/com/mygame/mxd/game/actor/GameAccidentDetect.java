@@ -4,6 +4,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RemoveActorAction;
 import com.badlogic.gdx.utils.Array;
 import com.mygame.mxd.game.GameStage;
 import com.mygame.mxd.game.utils.CollisionDetect;
@@ -48,25 +50,28 @@ public class GameAccidentDetect {
 	public void detectAttack(Rectangle attackArea){
 		Array<Actor> children = mGameStage.getRoot().getChildren();
 		for (int i = 0; i < children.size; i++) {
-			GameActor actor = (GameActor) children.get(i);
-			if (actor.getName().equals("guaiwu")) {
-				if (CollisionDetect.detect(new Rectangle(actor.getX()
-						+ actor.paddingLeft,
-						actor.getY() + actor.paddingBottom, (actor.getWidth()
-								- actor.paddingLeft - actor.paddingRight)
-								* actor.getScaleX(), (actor.getHeight()
-								- actor.paddingTop - actor.paddingBottom)
-								* actor.getScaleY()),
-								attackArea)) {
-					if(actor.isHurt() && actor.getStatus() != GameActor.STATUS_HURT){
-						if(xiaoming.getX() >= actor.getX() ){
-							hurtLeft = true;
-						}else{
-							hurtLeft = false;
+			if(children.get(i) instanceof Badboy){
+				Badboy actor = (Badboy) children.get(i);
+				if (actor.getName().equals("guaiwu") && !actor.isDied()) {
+					if (CollisionDetect.detect(new Rectangle(actor.getRealX(),
+							actor.getRealY(), actor.getRealWidth(), actor.getRealHeight()),
+									attackArea)) {
+						if(actor.isHurt() && actor.getStatus() != GameActor.STATUS_HURT){
+							actor.hpCurr -= actor.loseHp;
+							if(xiaoming.getRealX() >= actor.getRealX() ){
+								hurtLeft = true;
+							}else{
+								hurtLeft = false;
+							}
+							Array<Action> arrAction = actor.getActions();
+							actor.addAction(new HurtAction(hurtLeft));
 						}
-						Array<Action> arrAction = actor.getActions();
-						actor.addAction(new HurtAction(hurtLeft));
-							
+						if(actor.isDied()){
+							actor.setStatus(actor.STATUS_DIE);
+							actor.clearActions();
+							DiedAction diedAction = new DiedAction();
+							actor.addAction(Actions.sequence(diedAction, Actions.removeActor()));
+						}
 					}
 				}
 			}
@@ -79,31 +84,22 @@ public class GameAccidentDetect {
 
 		Array<Actor> children = mGameStage.getRoot().getChildren();
 		for (int i = 0; i < children.size; i++) {
-			GameActor actor = (GameActor) children.get(i);
-			if (actor.getName().equals("guaiwu")) {
-				if (CollisionDetect.detect(new Rectangle(actor.getX()
-						+ actor.paddingLeft,
-						actor.getY() + actor.paddingBottom, (actor.getWidth()
-								- actor.paddingLeft - actor.paddingRight)
-								* actor.getScaleX(), (actor.getHeight()
-								- actor.paddingTop - actor.paddingBottom)
-								* actor.getScaleY()),
-								new Rectangle(xiaoming.getX()
-										+ xiaoming.paddingLeft,
-										xiaoming.getY() + xiaoming.paddingBottom, (xiaoming.getWidth()
-												- xiaoming.paddingLeft - xiaoming.paddingRight)
-												* xiaoming.getScaleX(), (xiaoming.getHeight()
-												- xiaoming.paddingTop - xiaoming.paddingBottom)
-												* xiaoming.getScaleY()))) {
-					Gdx.app.debug("xujihao", "collision!!!");
-					if(actor.getX() >=  xiaoming.getX()){
-						hurtLeft = true;
-					}else{
-						hurtLeft = false;
+			if(children.get(i) instanceof Badboy){
+				Badboy actor = (Badboy) children.get(i);
+				if (actor.getName().equals("guaiwu") && !actor.isDied()) {
+					if (CollisionDetect.detect(new Rectangle(actor.getRealX(),
+							actor.getRealY(), actor.getRealWidth(), actor.getRealHeight()),
+									new Rectangle(xiaoming.getRealX(),
+											xiaoming.getRealY(), xiaoming.getRealWidth(), xiaoming.getRealHeight()))) {
+						if(actor.getRealX() >=  xiaoming.getRealX()){
+							hurtLeft = true;
+						}else{
+							hurtLeft = false;
+						}
+								
+						ret = true;
+						break;
 					}
-							
-					ret = true;
-					break;
 				}
 			}
 		}

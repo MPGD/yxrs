@@ -24,15 +24,15 @@ public class GhostMoveAction extends Action{
 		if(ghost.getStatus() == ghost.STATUS_HURT)
 			return false;
 		if(ghost.getMoveLeft()){
-			ghost.setX(ghost.getX() - ghost.getSpeed());
-			if(ghost.getX() <= 0){
-				ghost.setX(0);
+			ghost.setRealX(ghost.getRealX() - ghost.getSpeed());
+			if(ghost.getRealX() <= 0){
+				ghost.setRealX(0);
 				ghost.setMoveLeft(false);
 			}
 		}else{
-			ghost.setX(ghost.getX() + ghost.getSpeed());
-			if(ghost.getX() >= DataSet.ScreenWidth){
-				ghost.setX(DataSet.ScreenWidth);
+			ghost.setRealX(ghost.getRealX() + ghost.getSpeed());
+			if(ghost.getRealX() >= DataSet.ScreenWidth - ghost.getRealWidth()){
+				ghost.setRealX(DataSet.ScreenWidth - ghost.getRealWidth());
 				ghost.setMoveLeft(true);
 			}
 		}

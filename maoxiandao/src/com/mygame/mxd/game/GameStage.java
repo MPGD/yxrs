@@ -12,7 +12,7 @@ public class GameStage extends Stage {
 	
 	public GameStage(float width, float height, boolean keepAspectRatio) {
 		super(width, height, keepAspectRatio);
-		Gdx.input.setInputProcessor(this);
+		//Gdx.input.setInputProcessor(this);
 	}
 
 	@Override

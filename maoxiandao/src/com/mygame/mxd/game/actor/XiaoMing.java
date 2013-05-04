@@ -9,7 +9,9 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.mygame.mxd.game.DataSet;
+import com.mygame.mxd.game.Debug;
 import com.mygame.mxd.game.GameStage;
+import com.mygame.mxd.game.utils.CollisionDetect;
 
 public class XiaoMing extends GameActor{
 	
@@ -35,6 +37,11 @@ public class XiaoMing extends GameActor{
 	private boolean controllable = true;
 	private Animation animationAttackEffect1;
 	private Animation animationAttackEffect2;
+	
+	//战斗属性
+	public float strenth = 10;
+	public float defense = 10;
+	
 	public XiaoMing(){
 		Texture temp = new Texture(XIAOMING_IMG_SRC);
 		
@@ -51,7 +58,12 @@ public class XiaoMing extends GameActor{
 		Sprite _attack_effect4 = new Sprite(attack_effect4);
 		Sprite _attack_effect5 = new Sprite(attack_effect5);
 		Sprite _attack_effect6 = new Sprite(attack_effect6);
-		
+		_attack_effect1.setScale(0.8f, 1);
+		_attack_effect2.setScale(0.8f, 1);
+		_attack_effect3.setScale(0.8f, 1);
+		_attack_effect4.setScale(0.8f, 1);
+		_attack_effect5.setScale(0.8f, 1);
+		_attack_effect6.setScale(0.8f, 1);
 		
 		animationAttackEffect1 = new Animation(0.04f, _attack_effect3, _attack_effect2, _attack_effect1);
 		animationAttackEffect2 = new Animation(0.04f, _attack_effect4, _attack_effect4, _attack_effect5);
@@ -89,7 +101,6 @@ public class XiaoMing extends GameActor{
 		animationAttack = new Animation(0.14f, _attack[0], _attack[1], _attack[2],
 				_attack[3]);
 		
-		setY(100);
 		setSize(size, size);
 		setScale(scaleX, scaleY);
 		setAnimation(animationIdle);
@@ -100,7 +111,16 @@ public class XiaoMing extends GameActor{
 	@Override
 	public boolean checkPostion() {
 		// TODO Auto-generated method stub
-		return false;
+		boolean ret = true;
+		if(!isJump){
+			for(int i = 0; i < mGameLevel.gameBlocks.size(); i++){
+				if(getRealX() + getRealWidth() > mGameLevel.gameBlocks.get(i).x1 && getRealX() < mGameLevel.gameBlocks.get(i).x2 && getRealY() == mGameLevel.gameBlocks.get(i).y){
+					ret = false;
+					break;
+				}
+			}
+		}
+		return ret;
 	}
 
 	@Override
@@ -112,20 +132,20 @@ public class XiaoMing extends GameActor{
 			if((currAttackForm == 0 || currAttackForm == 1) && !isJump){
 				Sprite attackEffect = (Sprite)animationAttackEffect1.getKeyFrame(getAniTime(), false);
 				if(moveLeft){
-					attackEffect.setPosition(getX() - 40, getY() + (size - attackEffect.getTexture().getHeight())/2 - 10);
+					attackEffect.setPosition(getRealX() - 70, getRealY() + (getRealHeight() - attackEffect.getTexture().getHeight())/2);
 					attackEffect.setScale(Math.abs(attackEffect.getScaleX()), 1);
 				}else{
-					attackEffect.setPosition(getX() + 60, getY() + (size - attackEffect.getTexture().getHeight())/2 - 10);
+					attackEffect.setPosition(getRealX() + getRealWidth(), getRealY() +  (getRealHeight() - attackEffect.getTexture().getHeight())/2);
 					attackEffect.setScale(Math.abs(attackEffect.getScaleX()) * -1, 1);
 				}
 				attackEffect.draw(batch, parentAlpha);
 			}else{
 				Sprite attackEffect = (Sprite)animationAttackEffect2.getKeyFrame(getAniTime(), false);
 				if(moveLeft){
-					attackEffect.setPosition(getX() - 40, getY() + (size - attackEffect.getTexture().getHeight())/2 - 10);
+					attackEffect.setPosition(getRealX() - 70, getY() + (size - attackEffect.getTexture().getHeight())/2 - 10);
 					attackEffect.setScale(Math.abs(attackEffect.getScaleX()), 1);
 				}else{
-					attackEffect.setPosition(getX() + 60, getY() + (size - attackEffect.getTexture().getHeight())/2 - 10);
+					attackEffect.setPosition(getRealX() + getRealWidth(), getY() + (size - attackEffect.getTexture().getHeight())/2 - 10);
 					attackEffect.setScale(Math.abs(attackEffect.getScaleX()) * -1, 1);
 				}
 				attackEffect.draw(batch, parentAlpha);
@@ -147,21 +167,30 @@ public class XiaoMing extends GameActor{
 		
 		if(left){
 			moveLeft = true;
-			setX(getX() - DataSet.MoveSpeed);
+			setRealX(getRealX() - DataSet.MoveSpeed);
 		}else {
 			moveLeft = false;
-			setX(getX() + DataSet.MoveSpeed);
+			setRealX(getRealX() + DataSet.MoveSpeed);
+		}
+		if(getRealX() < 0){
+			setRealX(0);
+		}else if(getX() > DataSet.ScreenWidth - getRealWidth()){
+			setRealX(DataSet.ScreenWidth- getRealWidth());
 		}
 		if(!isAttack)
 			setStatus(STATUS_MOVE);
 	}
 	
 	public void jump(){
+		if(isAttack) return;
+		jump(DataSet.JumpV, DataSet.Gravity);
+	}
+	
+	public void jump(float v, float gravity){
 		if(isJump) return;
-		
 		MoveWithGravityAction jumpAction = new MoveWithGravityAction();
-		jumpAction.setV(DataSet.JumpV);
-		jumpAction.setGravity(DataSet.Gravity);
+		jumpAction.setV(v);
+		jumpAction.setGravity(gravity);
 		
 		RunnableAction resetJump = Actions.run(new Runnable(){
 			@Override
@@ -227,5 +256,17 @@ public class XiaoMing extends GameActor{
 	
 	public boolean getControllable(){
 		return controllable;
+	}
+
+	@Override
+	public void checkPostionCallBack() {
+		// TODO Auto-generated method stub
+		jump(0, DataSet.Gravity);
+	}
+	
+	public float getAttackDamage(){
+		float ret = 0;
+		ret = strenth * 1.6f; 
+		return ret;
 	}
 }
