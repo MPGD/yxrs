@@ -9,7 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.mygame.mxd.game.DataSet;
-import com.mygame.mxd.game.Debug;
 import com.mygame.mxd.game.GameStage;
 import com.mygame.mxd.game.utils.CollisionDetect;
 
@@ -173,9 +172,13 @@ public class XiaoMing extends GameActor{
 			setRealX(getRealX() + DataSet.MoveSpeed);
 		}
 		if(getRealX() < 0){
-			setRealX(0);
-		}else if(getX() > DataSet.ScreenWidth - getRealWidth()){
-			setRealX(DataSet.ScreenWidth- getRealWidth());
+			if(!mGameLevel.loadPrevLevel()){
+				setRealX(0);
+			}
+		}else if(getRealX() > DataSet.ScreenWidth - getRealWidth()){
+			if(!mGameLevel.loadNextLevel()){
+				setRealX(DataSet.ScreenWidth - getRealWidth());
+			}
 		}
 		if(!isAttack)
 			setStatus(STATUS_MOVE);

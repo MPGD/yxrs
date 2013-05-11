@@ -2,7 +2,6 @@ package com.mygame.mxd.game.actor;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.mygame.mxd.game.Debug;
 import com.mygame.mxd.game.utils.CollisionDetect;
 
 public class MoveWithGravityAction extends Action{

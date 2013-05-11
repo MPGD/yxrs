@@ -43,7 +43,7 @@ public class GameScreen extends BaseScreen {
 		mGamePad = new GamePad();
 
 		mUtilStage.addActor(mGamePad);
-		mGameLevel = LevelLoader.load(this, "data/level/level1.conf");
+		mGameLevel = LevelLoader.load(this, 0);
 		mGameCtrl = new GameController(xiaoming);
 		mGameCtrl.setGamePad(mGamePad);
 		mGameAccidentDetect = new GameAccidentDetect(this);
@@ -78,12 +78,6 @@ public class GameScreen extends BaseScreen {
 
 	public GameLevel getGameLevel(){
 		return mGameLevel;
-	}
-
-	@Override
-	public ArrayList<AssetDescriptor> getAssetList() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 	
 	

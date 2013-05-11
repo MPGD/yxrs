@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<levels >
+	<content level="0">
+	    <background name="data/bg.jpg"/>
+	    <bgm name=""/>
+		<block 	x1="0"	 x2="800"	 y="150"/>
+		<block x1="0"  x2="250"  y="280"/>
+		<block x1="600"  x2="800"  y="280"/>
+		<enemy name="ghost" x="500" y="200"/>
+		<enemy name="ghost" x="500" y="275"/>
+		<enemy name="ghost" x="400" y="350"/>
+		<startleft x="100" y="400"/>
+		<startright x="700" y="150"/>
+	</content>
+	<content level="1">
+	    <background name="data/bg.jpg"/>
+	    <bgm name=""/>
+		<block 	x1="0"	 x2="800"	 y="150"/>
+		<block x1="0"  x2="250"  y="280"/>
+		<block x1="600"  x2="800"  y="280"/>
+		<enemy name="ghost" x="500" y="200"/> 
+		<enemy name="ghost" x="400" y="350"/>
+		<startleft x="100" y="400"/>
+		<startright x="700" y="150"/>
+	</content>
+	<content level="2">
+	    <background name="data/bg.jpg"/>
+	    <bgm name=""/>
+		<block 	x1="0"	 x2="800"	 y="150"/>
+		<block x1="0"  x2="250"  y="280"/>
+		<block x1="600"  x2="800"  y="280"/>
+		<enemy name="ghost" x="500" y="200"/>
+		<enemy name="ghost" x="500" y="100"/>
+		<enemy name="ghost" x="400" y="350"/>
+		<startleft x="100" y="400"/>
+		<startright x="700" y="150"/>
+	</content>
+</levels>

@@ -2,7 +2,6 @@ package com.mygame.mxd.game.utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Rectangle;
-import com.mygame.mxd.game.Debug;
 import com.mygame.mxd.game.GameBlock;
 import com.mygame.mxd.game.actor.GameActor;
 

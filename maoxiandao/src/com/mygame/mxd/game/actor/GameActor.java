@@ -5,7 +5,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.mygame.mxd.game.Debug;
 import com.mygame.mxd.game.GameLevel;
 import com.mygame.mxd.game.GameStage;
 
