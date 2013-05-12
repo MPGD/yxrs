@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.GameLevel;
 
 public class Badboy extends GameActor{
@@ -28,7 +29,7 @@ public class Badboy extends GameActor{
 	}
 	
 	public Badboy(){
-		Texture temp = new Texture(BADBOY_IMG_SRC);
+		Texture temp = AssetManagerSingleton.manager.get(BADBOY_IMG_SRC);
 
 		// 加载关键帧动画
 		TextureRegion[] move = new TextureRegion(temp).split(size, size)[0];

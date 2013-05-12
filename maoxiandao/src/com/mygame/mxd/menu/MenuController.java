@@ -1,9 +1,14 @@
 package com.mygame.mxd.menu;
 
+import java.util.ArrayList;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetDescriptor;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -88,17 +93,34 @@ public class MenuController {
 
 	}
 
+	private void goGame(){
+		AssetManager manager;
+		ArrayList<AssetDescriptor> assetList;
+		
+		manager = AssetManagerSingleton.getManager();
+		assetList = new ArrayList<AssetDescriptor>();
+
+		assetList.add(new AssetDescriptor("data/bg.jpg", Texture.class));
+		assetList.add(new AssetDescriptor("data/controls.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/ghost01.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/xiaoming.png", Texture.class));
+		for(int i = 0; i < 6; i++){
+			assetList.add(new AssetDescriptor("data/actor/swordeffect/sword_effect" + (i+1) + ".png", Texture.class));
+		}
+		game.setScreen(new Progress(game, assetList, "com.mygame.mxd.screens.GameScreen"));
+	}
+	
 	private ClickListener click = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
 			// TODO Auto-generated method stub
 			if (event.getListenerActor() == layout.btn_start) {
 				sound.play();
-				game.setScreen(new GameScreen(game));
 				music.dispose();
 				sound.dispose();
 				screen.dispose();
 				stage.dispose();
+				goGame();
 				return;
 			}
 			if (event.getListenerActor() == layout.btn_settings) {

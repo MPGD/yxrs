@@ -13,6 +13,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
 import com.mygame.mxd.game.GameLevel;
 import com.mygame.mxd.game.GameScene;
@@ -69,6 +70,8 @@ public class GameScreen extends BaseScreen {
 	@Override
 	public void dispose() {
 		mGameLevel.dispose();
+		AssetManagerSingleton.manager.dispose();
+		AssetManagerSingleton.manager= null;
 	}
 
 

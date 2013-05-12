@@ -76,7 +76,7 @@ public class MainMenu extends BaseScreen {
 		batch.dispose();
 
 		AssetManagerSingleton.manager.dispose();
-
+		AssetManagerSingleton.manager = null;
 		Gdx.app.debug("xue", "mainmenu resource disposed");
 	}
 }
