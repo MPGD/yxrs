@@ -10,18 +10,21 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.utils.ActorGestureListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Disposable;
+import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.actor.XiaoMing;
 
-public class GamePad extends Actor{
+public class GamePad extends Actor implements Disposable{
 	public static int MOVE_LEFT = 1;
 	public static int MOVE_RIGHT = 2;
 
 	private Sprite sPad;
 	private int mEvent = 0;
+	private Texture textureControls = null;
 	public GamePad(){
-		Texture texture = new Texture(Gdx.files.internal("data/controls.png"));
-		TextureRegion[] buttons = TextureRegion.split(texture, 64, 64)[0];
-		TextureRegion pad = new TextureRegion(texture, 0, 64, 128, 128);
+		textureControls = AssetManagerSingleton.manager.get("data/controls.png");
+		TextureRegion[] buttons = TextureRegion.split(textureControls, 64, 64)[0];
+		TextureRegion pad = new TextureRegion(textureControls, 0, 64, 128, 128);
 		sPad = new Sprite(pad);
 		sPad.setPosition(0, 0);
 		ActorGestureListener gesListener = new ActorGestureListener(){
@@ -32,7 +35,7 @@ public class GamePad extends Actor{
 				// TODO Auto-generated method stub
 				if(x < 64) mEvent = MOVE_LEFT;
 				else mEvent = MOVE_RIGHT;
-				Gdx.app.debug("xujihao", "x is " + x);
+				Gdx.app.debug("xujihao", "mEvent is " + mEvent);
 			}
 
 			@Override
@@ -41,7 +44,7 @@ public class GamePad extends Actor{
 				// TODO Auto-generated method stub
 				if(x < 64) mEvent = MOVE_LEFT;
 				else mEvent = MOVE_RIGHT;
-				Gdx.app.debug("xujihao", "x is " + x);
+				Gdx.app.debug("xujihao", "mEvent is " + mEvent);
 			}
 
 			@Override
@@ -75,6 +78,12 @@ public class GamePad extends Actor{
 	
 	public int getGamePadInfo(){
 		return mEvent;
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		textureControls.dispose();
 	}
 	
 }

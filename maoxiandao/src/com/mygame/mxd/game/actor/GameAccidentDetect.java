@@ -67,10 +67,7 @@ public class GameAccidentDetect {
 							actor.addAction(new HurtAction(hurtLeft));
 						}
 						if(actor.isDied()){
-							actor.setStatus(actor.STATUS_DIE);
-							actor.clearActions();
-							DiedAction diedAction = new DiedAction();
-							actor.addAction(Actions.sequence(diedAction, Actions.removeActor()));
+							actor.goDead();
 						}
 					}
 				}

@@ -7,11 +7,11 @@ public class GameScene implements Disposable{
 	private Texture background = null;
 	
 	public GameScene(String path){
-		background = new Texture(path);
+		background = AssetManagerSingleton.manager.get(path);
 	}
 	
 	public void setTexture(String path){
-		background = new Texture(path);
+		background = AssetManagerSingleton.manager.get(path);
 	}
 	
 	public void dispose(){

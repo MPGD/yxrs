@@ -12,6 +12,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
+import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
@@ -24,6 +25,7 @@ import com.mygame.mxd.game.actor.GameAccidentDetect;
 import com.mygame.mxd.game.actor.XiaoMing;
 import com.mygame.mxd.game.controller.GameController;
 import com.mygame.mxd.game.gameutils.GamePad;
+import com.mygame.mxd.game.utils.ItemDrop;
 import com.mygame.mxd.game.utils.LevelLoader;
 
 public class GameScreen extends BaseScreen {
@@ -41,14 +43,13 @@ public class GameScreen extends BaseScreen {
 	public void show() {
 		xiaoming = new XiaoMing();
 		mUtilStage = new GameUtilStage(DataSet.ScreenWidth, DataSet.ScreenHeight, true);
-		mGamePad = new GamePad();
 
-		mUtilStage.addActor(mGamePad);
 		mGameLevel = LevelLoader.load(this, 0);
 		mGameCtrl = new GameController(xiaoming);
-		mGameCtrl.setGamePad(mGamePad);
+		mGameCtrl.setGamePad(mUtilStage.mGamePad);
+		mGameCtrl.setJumpButton(mUtilStage.buttJump);
+		mGameCtrl.setAttackButton(mUtilStage.buttAttack);
 		mGameAccidentDetect = new GameAccidentDetect(this);
-
 	}
 
 	@Override
@@ -70,6 +71,7 @@ public class GameScreen extends BaseScreen {
 	@Override
 	public void dispose() {
 		mGameLevel.dispose();
+		mUtilStage.dispose();
 		AssetManagerSingleton.manager.dispose();
 		AssetManagerSingleton.manager= null;
 	}

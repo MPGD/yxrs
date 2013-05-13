@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<item-description>
+    <level value="1">
+	   	<item name="cap01">
+	   	    <type name="cap"/>
+	   	    <path name="1.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.8"/>
+	  	</item>
+	</level>
+	<level value="2">
+	   	<item name="cap02">
+	   	    <type name="cap"/>
+	   	    <path name="2.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.6"/>
+	  	</item>
+	</level>
+	<level value="3">
+	   	<item name="cap03">
+	   	    <type name="cap"/>
+	   	    <path name="3.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.4"/>
+	  	</item>
+	</level>
+	<level value="4">
+	   	<item name="cap04">
+	   	    <type name="cap"/>
+	   	    <path name="4.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.2"/>
+	  	</item>
+	</level>
+	<level value="5">
+	   	<item name="cap05">
+	   	    <type name="cap"/>
+	   	    <path name="5.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.05"/>
+	  	</item>
+	</level>
+</item-description>

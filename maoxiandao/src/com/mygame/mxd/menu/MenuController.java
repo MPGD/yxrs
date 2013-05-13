@@ -104,9 +104,27 @@ public class MenuController {
 		assetList.add(new AssetDescriptor("data/controls.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/ghost01.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/xiaoming.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/items/sword1.png", Texture.class));
+		
 		for(int i = 0; i < 6; i++){
 			assetList.add(new AssetDescriptor("data/actor/swordeffect/sword_effect" + (i+1) + ".png", Texture.class));
 		}
+		for(int i = 0; i < 5; i++){
+			assetList.add(new AssetDescriptor("data/items/cap/" + (i+1) + ".png", Texture.class));
+		}
+		for(int i = 0; i < 5; i++){
+			assetList.add(new AssetDescriptor("data/items/cape/" + (i+1) + ".png", Texture.class));
+		}
+		for(int i = 0; i < 5; i++){
+			assetList.add(new AssetDescriptor("data/items/coat/" + (i+1) + ".png", Texture.class));
+		}
+		for(int i = 0; i < 5; i++){
+			assetList.add(new AssetDescriptor("data/items/glove/" + (i+1) + ".png", Texture.class));
+		}
+		for(int i = 0; i < 5; i++){
+			assetList.add(new AssetDescriptor("data/items/sword/" + (i+1) + ".png", Texture.class));
+		}
+		
 		game.setScreen(new Progress(game, assetList, "com.mygame.mxd.screens.GameScreen"));
 	}
 	

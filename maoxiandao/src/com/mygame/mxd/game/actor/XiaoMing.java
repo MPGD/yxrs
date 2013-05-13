@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
+import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
 import com.mygame.mxd.game.GameStage;
 import com.mygame.mxd.game.utils.CollisionDetect;
@@ -38,18 +39,18 @@ public class XiaoMing extends GameActor{
 	private Animation animationAttackEffect2;
 	
 	//战斗属性
-	public float strenth = 10;
+	public float strenth = 100;
 	public float defense = 10;
 	
 	public XiaoMing(){
-		Texture temp = new Texture(XIAOMING_IMG_SRC);
+		Texture temp = AssetManagerSingleton.manager.get(XIAOMING_IMG_SRC);
 		
-		Texture attack_effect1 = new Texture("data/actor/swordeffect/sword_effect1.png");
-		Texture attack_effect2 = new Texture("data/actor/swordeffect/sword_effect2.png");
-		Texture attack_effect3 = new Texture("data/actor/swordeffect/sword_effect3.png");
-		Texture attack_effect4 = new Texture("data/actor/swordeffect/sword_effect4.png");
-		Texture attack_effect5 = new Texture("data/actor/swordeffect/sword_effect5.png");
-		Texture attack_effect6 = new Texture("data/actor/swordeffect/sword_effect6.png");
+		Texture attack_effect1 = AssetManagerSingleton.manager.get("data/actor/swordeffect/sword_effect1.png");
+		Texture attack_effect2 = AssetManagerSingleton.manager.get("data/actor/swordeffect/sword_effect2.png");
+		Texture attack_effect3 = AssetManagerSingleton.manager.get("data/actor/swordeffect/sword_effect3.png");
+		Texture attack_effect4 = AssetManagerSingleton.manager.get("data/actor/swordeffect/sword_effect4.png");
+		Texture attack_effect5 = AssetManagerSingleton.manager.get("data/actor/swordeffect/sword_effect5.png");
+		Texture attack_effect6 = AssetManagerSingleton.manager.get("data/actor/swordeffect/sword_effect6.png");
 		
 		Sprite _attack_effect1 = new Sprite(attack_effect1);
 		Sprite _attack_effect2 = new Sprite(attack_effect2);

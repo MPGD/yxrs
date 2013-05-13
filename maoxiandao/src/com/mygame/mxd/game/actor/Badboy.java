@@ -1,12 +1,15 @@
 package com.mygame.mxd.game.actor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.GameLevel;
+import com.mygame.mxd.game.utils.ItemDrop;
 
 public class Badboy extends GameActor{
 	
@@ -111,6 +114,22 @@ public class Badboy extends GameActor{
 		if(hpCurr < 0) return true;
 		return false;
 	}
-	
-	
+	private Badboy badboy = this;
+	public void goDead(){
+		setStatus(STATUS_DIE);
+		clearActions();
+		DiedAction diedAction = new DiedAction();
+		addAction(Actions.sequence(diedAction, Actions.run(new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				Item item = ItemDrop.calcu(badboy);
+				if(item != null){
+					getStage().addActor(item);
+					item.setGameLevel(mGameLevel);
+				}
+			}
+		}), Actions.removeActor()));
+	}
 }
