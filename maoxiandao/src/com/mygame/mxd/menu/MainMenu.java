@@ -1,31 +1,19 @@
 package com.mygame.mxd.menu;
 
+import java.io.FileReader;
+import java.io.IOException;
+
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.InputMultiplexer;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL10;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.NinePatch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.actions.MoveToAction;
-import com.badlogic.gdx.scenes.scene2d.actions.RotateToAction;
-import com.badlogic.gdx.scenes.scene2d.ui.Button;
-import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider;
-import com.badlogic.gdx.scenes.scene2d.ui.Slider.SliderStyle;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.XmlReader;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
 import com.mygame.mxd.screens.BaseScreen;
-import com.mygame.mxd.screens.GameScreen;
 
 public class MainMenu extends BaseScreen {
 
@@ -44,6 +32,19 @@ public class MainMenu extends BaseScreen {
 	@Override
 	public void show() {
 		// TODO Auto-generated method stub
+
+		try {
+			FileReader reader = new FileReader("src/data/menu/conf.xml");
+			XmlReader xr = new XmlReader();
+			XmlReader.Element mElement = xr.parse(reader);
+			DataSet.MUSIC_VOLUME = mElement.getFloat("music");
+			DataSet.SOUND_VOLUME = mElement.getFloat("sound");
+
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
 		batch = new SpriteBatch();
 		stage = new MenuStage(DataSet.ScreenWidth, DataSet.ScreenHeight, true);
 

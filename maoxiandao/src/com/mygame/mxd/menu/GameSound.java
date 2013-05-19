@@ -16,6 +16,10 @@ public class GameSound {
 		this.volume = volume;
 	}
 
+	public float getVolume() {
+		return this.volume;
+	}
+
 	public void play() {
 		if (volume == 0) {
 			return;

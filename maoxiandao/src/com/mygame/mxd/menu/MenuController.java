@@ -1,5 +1,7 @@
 package com.mygame.mxd.menu;
 
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
@@ -9,13 +11,11 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.XmlWriter;
 import com.mygame.mxd.game.AssetManagerSingleton;
-import com.mygame.mxd.screens.GameScreen;
 
 public class MenuController {
 
@@ -188,6 +188,18 @@ public class MenuController {
 					sound.setVolume(layout.getSoundLevel());
 
 					music.rePlay();
+
+					try {
+						FileWriter writer = new FileWriter("src/data/menu/conf.xml");
+						XmlWriter xw = new XmlWriter(writer);
+						xw.element("Volume");
+						xw.element("music", music.getVolume());
+						xw.element("sound", sound.getVolume());
+						xw.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 
 					return;
 				}

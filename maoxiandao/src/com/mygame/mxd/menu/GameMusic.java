@@ -41,6 +41,10 @@ public class GameMusic {
 	public void setVolume(float volume) {
 		this.volume = volume;
 	}
+	
+	public float getVolume(){
+		return this.volume;
+	}
 
 	public void dispose() {
 		if (BGMusic != null) {
