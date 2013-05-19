@@ -3,7 +3,7 @@ package com.mygame.mxd.game.actor;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.mygame.mxd.game.GameBlock;
+import com.mygame.mxd.game.Land;
 import com.mygame.mxd.game.GameStage;
 import com.mygame.mxd.game.utils.CollisionDetect;
 
@@ -22,10 +22,10 @@ public class ItemAction extends Action{
 		item.setY(item.getY() + deltaS);
 		actor.rotate(10 * delta);
 		if(deltaS < 0){
-			for(int i = 0; i < item.mGameLevel.gameBlocks.size(); i++){
-				if(CollisionDetect.detect(item, item.mGameLevel.gameBlocks.get(i))){
-					if(lastPosY > item.mGameLevel.gameBlocks.get(i).y){
-						item.setY(item.mGameLevel.gameBlocks.get(i).y);
+			for(int i = 0; i < item.mGameLevel.lands.size(); i++){
+				if(CollisionDetect.detect(item, item.mGameLevel.lands.get(i))){
+					if(lastPosY > item.mGameLevel.lands.get(i).y){
+						item.setY(item.mGameLevel.lands.get(i).y);
 						return true;
 					}
 				}

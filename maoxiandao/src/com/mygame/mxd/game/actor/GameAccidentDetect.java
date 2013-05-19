@@ -57,14 +57,8 @@ public class GameAccidentDetect {
 							actor.getRealY(), actor.getRealWidth(), actor.getRealHeight()),
 									attackArea)) {
 						if(actor.isHurt() && actor.getStatus() != GameActor.STATUS_HURT){
-							actor.hpCurr -= actor.loseHp;
-							if(xiaoming.getRealX() >= actor.getRealX() ){
-								hurtLeft = true;
-							}else{
-								hurtLeft = false;
-							}
-							Array<Action> arrAction = actor.getActions();
-							actor.addAction(new HurtAction(hurtLeft));
+							actor.beAttacked();
+
 						}
 						if(actor.isDied()){
 							actor.goDead();

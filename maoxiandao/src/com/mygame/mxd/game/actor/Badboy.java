@@ -1,15 +1,19 @@
 package com.mygame.mxd.game.actor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.utils.Array;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.GameLevel;
 import com.mygame.mxd.game.utils.ItemDrop;
+import com.mygame.mxd.menu.GameSound;
 
 public class Badboy extends GameActor{
 	
@@ -18,7 +22,9 @@ public class Badboy extends GameActor{
 	private float scaleY = 1f;
 	private float speed = 2;
 	private int size = 81;
-	
+	private GameSound sound1 = new GameSound((Sound) AssetManagerSingleton.manager.get("data/audio/0100120.Damage.mp3"));
+	private GameSound sound2 = new GameSound((Sound) AssetManagerSingleton.manager.get("data/audio/0100100.Die.mp3"));
+	private GameSound soundDropItem = new GameSound((Sound) AssetManagerSingleton.manager.get("data/audio/DropItem.mp3"));
 	//战斗属性
 	public float hpTotal = 100;
 	public float hpCurr = 100;
@@ -103,7 +109,25 @@ public class Badboy extends GameActor{
 		if(loseHp > hpTotal * 0.15f) return true;
 		return false;
 	}
-
+	
+	@Override
+	public boolean beAttacked() {
+		// TODO Auto-generated method stub
+		boolean hurtLeft = false;
+		hpCurr -= loseHp;
+		if(mGameLevel.xiaoming.getRealX() >= getRealX() ){
+			hurtLeft = true;
+		}else{
+			hurtLeft = false;
+		}
+		Array<Action> arrAction = getActions();
+		addAction(new HurtAction(hurtLeft));
+		DamageNumber n = new DamageNumber(120, getRealX(), getRealY());
+		getStage().addActor(n);
+		sound1.play();
+		return false;
+	}
+	
 	@Override
 	public void checkPostionCallBack() {
 		// TODO Auto-generated method stub
@@ -116,6 +140,7 @@ public class Badboy extends GameActor{
 	}
 	private Badboy badboy = this;
 	public void goDead(){
+		sound2.play();
 		setStatus(STATUS_DIE);
 		clearActions();
 		DiedAction diedAction = new DiedAction();
@@ -126,6 +151,7 @@ public class Badboy extends GameActor{
 				// TODO Auto-generated method stub
 				Item item = ItemDrop.calcu(badboy);
 				if(item != null){
+					soundDropItem.play();
 					getStage().addActor(item);
 					item.setGameLevel(mGameLevel);
 				}

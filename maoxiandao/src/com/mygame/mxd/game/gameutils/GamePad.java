@@ -17,7 +17,8 @@ import com.mygame.mxd.game.actor.XiaoMing;
 public class GamePad extends Actor implements Disposable{
 	public static int MOVE_LEFT = 1;
 	public static int MOVE_RIGHT = 2;
-
+	public static int MOVE_UP = 4;
+	public static int MOVE_DOWN = 8;
 	private Sprite sPad;
 	private int mEvent = 0;
 	private Texture textureControls = null;
@@ -33,8 +34,12 @@ public class GamePad extends Actor implements Disposable{
 			public void touchDown(InputEvent event, float x, float y,
 					int pointer, int button) { 
 				// TODO Auto-generated method stub
-				if(x < 64) mEvent = MOVE_LEFT;
-				else mEvent = MOVE_RIGHT;
+				if(x < 64) mEvent |= MOVE_LEFT;
+				else mEvent |= MOVE_RIGHT;
+
+				if(y > 64) mEvent |= MOVE_UP;
+				else mEvent |= MOVE_DOWN;
+
 				Gdx.app.debug("xujihao", "mEvent is " + mEvent);
 			}
 
@@ -42,16 +47,24 @@ public class GamePad extends Actor implements Disposable{
 			public void pan(InputEvent event, float x, float y, float deltaX,
 					float deltaY) {
 				// TODO Auto-generated method stub
-				if(x < 64) mEvent = MOVE_LEFT;
-				else mEvent = MOVE_RIGHT;
+
+				if(x < 64) mEvent |= MOVE_LEFT;
+				else mEvent |= MOVE_RIGHT;
+
+				if(y > 64) mEvent |= MOVE_UP;
+				else mEvent |= MOVE_DOWN;
+				
 				Gdx.app.debug("xujihao", "mEvent is " + mEvent);
 			}
 
 			@Override
 			public boolean longPress(Actor actor, float x, float y) {
 				// TODO Auto-generated method stub
-				if(x < 64) mEvent = MOVE_LEFT;
-				else mEvent = MOVE_RIGHT;
+				if(x < 64) mEvent |= MOVE_LEFT;
+				else mEvent |= MOVE_RIGHT;
+
+				if(y > 64) mEvent |= MOVE_UP;
+				else mEvent |= MOVE_DOWN;
 				return true;
 			}
 

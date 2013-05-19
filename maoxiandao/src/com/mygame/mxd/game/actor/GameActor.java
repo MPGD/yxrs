@@ -15,7 +15,8 @@ public abstract class GameActor extends Actor{
 	public static int STATUS_ATTACK = -3;
 	public static int STATUS_HURT = -4;
 	public static int STATUS_MAGIC = -5;
-	public static int STATUS_DIE = -6;
+	public static int STATUS_CLIMB = -6;
+	public static int STATUS_DIE = -7;
 	
 	public GameLevel mGameLevel;
 	protected boolean moveLeft = false;
@@ -70,7 +71,9 @@ public abstract class GameActor extends Actor{
 	abstract public boolean checkPostion();
 	/*有时候砍怪血量很少的时候，怪物并不会受伤，因此会继续前进*/
 	abstract public boolean isHurt();
-
+	public boolean beAttacked(){
+		return false;
+	}
 	public void setPadding(float paddingTop, float paddingBottom, float paddingLeft, float paddingRight){
 		this.paddingTop = paddingTop;
 		this.paddingBottom = paddingBottom;

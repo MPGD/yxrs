@@ -1,17 +1,22 @@
 package com.mygame.mxd.game.actor;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
 import com.mygame.mxd.game.GameStage;
+import com.mygame.mxd.game.Rope;
 import com.mygame.mxd.game.utils.CollisionDetect;
+import com.mygame.mxd.menu.GameSound;
 
 public class XiaoMing extends GameActor{
 	
@@ -22,7 +27,9 @@ public class XiaoMing extends GameActor{
 	public static String ATTACK_EFFECT4 = "data/actor/swordeffect/sword_effect4.png";
 	public static String ATTACK_EFFECT5 = "data/actor/swordeffect/sword_effect5.png";
 	public static String ATTACK_EFFECT6 = "data/actor/swordeffect/sword_effect6.png";
-	
+	private GameSound sound1 = new GameSound((Sound) AssetManagerSingleton.manager.get("data/audio/swordL.Attack.mp3"));
+	private GameSound sound2 = new GameSound((Sound) AssetManagerSingleton.manager.get("data/audio/swordS.Attack.mp3"));
+	private GameSound soundJump = new GameSound((Sound) AssetManagerSingleton.manager.get("data/audio/Jump.mp3"));
 	private boolean isJump = false;
 	//攻击条件保护，很多地方用到了这个判断，需要注意。
 	//在攻击的时候，人物的状态始终处在攻击状态
@@ -37,7 +44,7 @@ public class XiaoMing extends GameActor{
 	private boolean controllable = true;
 	private Animation animationAttackEffect1;
 	private Animation animationAttackEffect2;
-	
+	private Rope climbingRope = null;
 	//战斗属性
 	public float strenth = 100;
 	public float defense = 10;
@@ -112,9 +119,12 @@ public class XiaoMing extends GameActor{
 	public boolean checkPostion() {
 		// TODO Auto-generated method stub
 		boolean ret = true;
+		if(getStatus() == STATUS_CLIMB){
+			return false;
+		}
 		if(!isJump){
-			for(int i = 0; i < mGameLevel.gameBlocks.size(); i++){
-				if(getRealX() + getRealWidth() > mGameLevel.gameBlocks.get(i).x1 && getRealX() < mGameLevel.gameBlocks.get(i).x2 && getRealY() == mGameLevel.gameBlocks.get(i).y){
+			for(int i = 0; i < mGameLevel.lands.size(); i++){
+				if(getRealX() + getRealWidth() > mGameLevel.lands.get(i).x1 && getRealX() < mGameLevel.lands.get(i).x2 && getRealY() == mGameLevel.lands.get(i).y){
 					ret = false;
 					break;
 				}
@@ -157,14 +167,16 @@ public class XiaoMing extends GameActor{
 	public void idle() {
 		// TODO Auto-generated method stub
 		if(isAttack) return;
-		
+		if(getStatus() == STATUS_CLIMB) return;
 		super.idle();
 		controllable = true;
 	}
+	
 
 	public void move(boolean left){
 		if(isAttack && !isJump) return;
-		
+		if(getStatus() == STATUS_CLIMB) return;
+		float temp = getRealX();
 		if(left){
 			moveLeft = true;
 			setRealX(getRealX() - DataSet.MoveSpeed);
@@ -172,15 +184,15 @@ public class XiaoMing extends GameActor{
 			moveLeft = false;
 			setRealX(getRealX() + DataSet.MoveSpeed);
 		}
-		if(getRealX() < 0){
-			if(!mGameLevel.loadPrevLevel()){
-				setRealX(0);
-			}
-		}else if(getRealX() > DataSet.ScreenWidth - getRealWidth()){
-			if(!mGameLevel.loadNextLevel()){
-				setRealX(DataSet.ScreenWidth - getRealWidth());
-			}
-		}
+//		if(getRealX() < 0){
+//			if(!mGameLevel.loadPrevLevel()){
+//				setRealX(0);
+//			}
+//		}else if(getRealX() > DataSet.ScreenWidth - getRealWidth()){
+//			if(!mGameLevel.loadNextLevel()){
+//				setRealX(DataSet.ScreenWidth - getRealWidth());
+//			}
+//		}
 		if(!isAttack)
 			setStatus(STATUS_MOVE);
 	}
@@ -195,7 +207,7 @@ public class XiaoMing extends GameActor{
 		MoveWithGravityAction jumpAction = new MoveWithGravityAction();
 		jumpAction.setV(v);
 		jumpAction.setGravity(gravity);
-		
+		soundJump.play();
 		RunnableAction resetJump = Actions.run(new Runnable(){
 			@Override
 			public void run() {
@@ -209,6 +221,11 @@ public class XiaoMing extends GameActor{
 		isJump = true;
 	}
 	
+	public void stopJump(){
+		isJump = false;
+		clearActions();
+	}
+	
 	public void attack(){
 		if(isAttack) return;
 		if(getAniTime() < comboTime){
@@ -218,6 +235,12 @@ public class XiaoMing extends GameActor{
 			}
 		}else{
 			currAttackForm = 0;
+		}
+		
+		if(currAttackForm < 2){
+			sound1.play();
+		}else{
+			sound2.play();
 		}
 		resetAniTime();
 		RunnableAction resetAttack = Actions.run(new Runnable(){
@@ -231,7 +254,38 @@ public class XiaoMing extends GameActor{
 		setStatus(STATUS_ATTACK);
 		isAttack = true;
 	}
+	
+	public void climb(boolean up){
+		if(up){
+			setRealY(getRealY() + DataSet.MoveSpeed);
+		}else {
+			setRealY(getRealY() - DataSet.MoveSpeed);
+		}
+		if(!CollisionDetect.detect(this, climbingRope)){
+			setStatus(STATUS_IDLE);
+			idle();
+		}
+	}
+	
+	public void climbRope(){
+		Rope rope = null;
+		Gdx.app.debug("xujihao", "climbrope " + mGameLevel.ropes.size());
+		for(int i = 0; i < mGameLevel.ropes.size(); i++){
+			if(CollisionDetect.detect(this, mGameLevel.ropes.get(i))){
+				rope = mGameLevel.ropes.get(i);
+				break;
+			}
+		}
+		
+		if(rope != null){
+			climbingRope = rope;
+			if(isJump) stopJump();
+			setStatus(STATUS_CLIMB);
+			setRealX(rope.x - getRealWidth() / 2);
+		}
 
+	}
+	
 	public Rectangle getAttackArea(){
 		Rectangle ret = new Rectangle();
 		if(moveLeft){
@@ -254,6 +308,9 @@ public class XiaoMing extends GameActor{
 		return true;
 	}
 	
+	public boolean isJump(){
+		return isJump;
+	}
 	public void setControllable(boolean ctrl){
 		controllable = ctrl;
 	}

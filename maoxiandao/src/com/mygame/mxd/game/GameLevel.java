@@ -10,6 +10,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
@@ -23,11 +24,12 @@ public class GameLevel implements Disposable{
 	private GameStage mGameStage;
 	private GameScene mGameScene;
 	private Music bgm;
-	private XiaoMing xiaoming;
+	public XiaoMing xiaoming;
 	private int level;
 	private Sprite sPad;
 	
-	public ArrayList<GameBlock> gameBlocks = new ArrayList<GameBlock>();
+	public ArrayList<Land> lands = new ArrayList<Land>();
+	public ArrayList<Rope> ropes = new ArrayList<Rope>();
 	
 	public GameLevel(GameScreen gameScreen){
 		mGameScreen = gameScreen;
@@ -71,8 +73,8 @@ public class GameLevel implements Disposable{
 				if(child.getName().equals("background")){
 					setScene(new GameScene(child.getAttribute("name")));
 				}else if(child.getName().equals("bgm")){
-				}else if(child.getName().equals("block")){
-					addBlock(new GameBlock(Float.valueOf(child.getAttribute("x1")), Float.valueOf(child.getAttribute("x2")), Float.valueOf(child.getAttribute("y"))));
+				}else if(child.getName().equals("land")){
+					addLand(new Land(Float.valueOf(child.getAttribute("x1")), Float.valueOf(child.getAttribute("x2")), Float.valueOf(child.getAttribute("y"))));
 				}else if(child.getName().equals("enemy")){
 					Badboy ghost = new Badboy();
 					ghost.setPosition(Float.valueOf(child.getAttribute("x")), Float.valueOf(child.getAttribute("y")));
@@ -106,8 +108,11 @@ public class GameLevel implements Disposable{
 		this.bgm = bgm;
 	}
 
-	public void addBlock(GameBlock gameBlock){
-		gameBlocks.add(gameBlock);
+	public void addLand(Land land){
+		lands.add(land);
+	}
+	public void addRope(Rope rope){
+		ropes.add(rope);
 	}
 	
 	public void setLevel(int level){
@@ -121,10 +126,22 @@ public class GameLevel implements Disposable{
 	public void setStartRight(float x, float y){
 		
 	}
-	
+	Vector3 lerpTarget = new Vector3();
 	public void render(float delta){
+		mGameStage.getCamera().position.lerp(lerpTarget.set(xiaoming.getRealX(), xiaoming.getRealY(), 0), 2f * delta);
+		if(mGameStage.getCamera().position.x < DataSet.ScreenWidth / 2){
+			mGameStage.getCamera().position.x = DataSet.ScreenWidth / 2;
+		}else if(mGameStage.getCamera().position.x > mGameScene.getTexture().getWidth() - DataSet.ScreenWidth / 2){
+			mGameStage.getCamera().position.x = mGameScene.getTexture().getWidth() - DataSet.ScreenWidth / 2;
+		}
+		
+		if(mGameStage.getCamera().position.y < DataSet.ScreenHeight / 2){
+			mGameStage.getCamera().position.y = DataSet.ScreenHeight / 2;
+		}else if(mGameStage.getCamera().position.y > mGameScene.getTexture().getHeight() - DataSet.ScreenHeight / 2){
+			mGameStage.getCamera().position.y = mGameScene.getTexture().getHeight() - DataSet.ScreenHeight / 2;
+		}
 		mGameStage.getSpriteBatch().begin();
-		mGameStage.getSpriteBatch().draw(mGameScene.getTexture(), 0, 0, DataSet.ScreenWidth, DataSet.ScreenHeight);
+		mGameStage.getSpriteBatch().draw(mGameScene.getTexture(), 0, 0);
 		mGameStage.getSpriteBatch().end();
 		mGameStage.act(delta);
 		mGameStage.update(delta);

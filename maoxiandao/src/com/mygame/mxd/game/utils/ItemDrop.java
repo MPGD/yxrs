@@ -24,15 +24,18 @@ public class ItemDrop {
 			Element element;
 			element = xmlReader.parse(mFileHandle);
 			for (int i = 4; i >= 0; i--) {
-				
-				//先从该等级的物品中随机找出一个参与随机运算
+
+				// 先从该等级的物品中随机找出一个参与随机运算
 				int a = (int) (Math.random() * 10000);
 				Element temp = element.getChild(i);
 				int b = element.getChild(i).getChildCount();
+				Element ee = element.getChild(i).getChild(0);
+				int h = ee.getChildCount();
 				int d = element.getChildCount();
 				int c = a % b;
 				int g = temp.getChildCount();
-				Gdx.app.log("xujihao", "a = " + a + " b = " + b + " c = " + c + " d = " + d + " g = " + g + temp.getName());
+				Gdx.app.log("xujihao", "a = " + a + " b = " + b + " c = " + c
+						+ " d = " + d + " g = " + g + " h = " + ee.getChildCount() + " " + ee.getName());
 				Element e = element.getChild(i).getChild(c);
 				String s = e.getChildByName("probability")
 						.getAttribute("value");
@@ -40,11 +43,13 @@ public class ItemDrop {
 				float random = (float) Math.random();
 				if (random < f) {
 					String path = "data/items/"
-							+ e.getChildByName("type").getAttribute("name") + "/"
+							+ e.getChildByName("type").getAttribute("name")
+							+ "/"
 							+ e.getChildByName("path").getAttribute("name");
 					Gdx.app.debug("xujihao", path);
 					Texture t = AssetManagerSingleton.manager.get(path);
-					item = new Item(new TextureRegion(t), badboy.getRealX(), badboy.getRealY());
+					item = new Item(new TextureRegion(t), badboy.getRealX(),
+							badboy.getRealY());
 					break;
 				}
 			}

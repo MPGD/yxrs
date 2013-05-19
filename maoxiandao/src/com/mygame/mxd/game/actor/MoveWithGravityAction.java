@@ -26,10 +26,10 @@ public class MoveWithGravityAction extends Action{
 		v = v - gravity * t;
 		gActor.setRealY(gActor.getRealY() + deltaS);
 		if(deltaS < 0){
-			for(int i = 0; i < gActor.mGameLevel.gameBlocks.size(); i++){
-				if(CollisionDetect.detect(gActor, gActor.mGameLevel.gameBlocks.get(i))){
-					if(lastPosY > gActor.mGameLevel.gameBlocks.get(i).y){
-						gActor.setRealY(gActor.mGameLevel.gameBlocks.get(i).y);
+			for(int i = 0; i < gActor.mGameLevel.lands.size(); i++){
+				if(CollisionDetect.detect(gActor, gActor.mGameLevel.lands.get(i))){
+					if(lastPosY > gActor.mGameLevel.lands.get(i).y){
+						gActor.setRealY(gActor.mGameLevel.lands.get(i).y);
 						return true;
 					}
 				}

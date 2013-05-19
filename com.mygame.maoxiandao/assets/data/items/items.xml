@@ -8,10 +8,66 @@
 	   	    <effect defense="1" lucky="1"/>
 	   	    <probability value="0.8"/>
 	  	</item>
+	  	<item name="coat01">
+	   	    <type name="coat"/>
+	   	    <path name="1.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.8"/>
+	  	</item>
+	  	<item name="glove01">
+	   	    <type name="glove"/>
+	   	    <path name="1.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.8"/>
+	  	</item>
+	  	<item name="sword01">
+	   	    <type name="sword"/>
+	   	    <path name="1.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.8"/>
+	  	</item>
+	  	<item name="cape01">
+	   	    <type name="cape"/>
+	   	    <path name="1.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.8"/>
+	  	</item>
 	</level>
 	<level value="2">
 	   	<item name="cap02">
 	   	    <type name="cap"/>
+	   	    <path name="2.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.6"/>
+	  	</item>
+	  	<item name="coat02">
+	   	    <type name="coat"/>
+	   	    <path name="2.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.6"/>
+	  	</item>
+	  	<item name="glove02">
+	   	    <type name="glove"/>
+	   	    <path name="2.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.6"/>
+	  	</item>
+	  	<item name="sword02">
+	   	    <type name="sword"/>
+	   	    <path name="2.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.6"/>
+	  	</item>
+	  	<item name="cape02">
+	   	    <type name="cape"/>
 	   	    <path name="2.png"/>
 	   	    <description name="dumn cap"/>
 	   	    <effect defense="1" lucky="1"/>
@@ -26,6 +82,34 @@
 	   	    <effect defense="1" lucky="1"/>
 	   	    <probability value="0.4"/>
 	  	</item>
+	  	<item name="coat03">
+	   	    <type name="coat"/>
+	   	    <path name="3.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.4"/>
+	  	</item>
+	  	<item name="glove03">
+	   	    <type name="glove"/>
+	   	    <path name="3.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.4"/>
+	  	</item>
+	  	<item name="sword03">
+	   	    <type name="sword"/>
+	   	    <path name="3.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.4"/>
+	  	</item>
+	  	<item name="cape03">
+	   	    <type name="cape"/>
+	   	    <path name="3.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.4"/>
+	  	</item>
 	</level>
 	<level value="4">
 	   	<item name="cap04">
@@ -35,10 +119,66 @@
 	   	    <effect defense="1" lucky="1"/>
 	   	    <probability value="0.2"/>
 	  	</item>
+	  	<item name="coat04">
+	   	    <type name="coat"/>
+	   	    <path name="4.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.2"/>
+	  	</item>
+	  	<item name="glove04">
+	   	    <type name="glove"/>
+	   	    <path name="4.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.2"/>
+	  	</item>
+	  	<item name="sword04">
+	   	    <type name="sword"/>
+	   	    <path name="4.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.2"/>
+	  	</item>
+	  	<item name="cape04">
+	   	    <type name="cape"/>
+	   	    <path name="4.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.2"/>
+	  	</item>
 	</level>
 	<level value="5">
 	   	<item name="cap05">
 	   	    <type name="cap"/>
+	   	    <path name="5.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.05"/>
+	  	</item>
+	  	<item name="coat05">
+	   	    <type name="coat"/>
+	   	    <path name="5.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.05"/>
+	  	</item>
+	  	<item name="glove05">
+	   	    <type name="glove"/>
+	   	    <path name="5.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.05"/>
+	  	</item>
+	  	<item name="sword05">
+	   	    <type name="sword"/>
+	   	    <path name="5.png"/>
+	   	    <description name="dumn cap"/>
+	   	    <effect defense="1" lucky="1"/>
+	   	    <probability value="0.05"/>
+	  	</item>
+	  	<item name="cape05">
+	   	    <type name="cape"/>
 	   	    <path name="5.png"/>
 	   	    <description name="dumn cap"/>
 	   	    <effect defense="1" lucky="1"/>

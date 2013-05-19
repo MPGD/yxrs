@@ -100,11 +100,21 @@ public class MenuController {
 		manager = AssetManagerSingleton.getManager();
 		assetList = new ArrayList<AssetDescriptor>();
 
+		//audio
+		assetList.add(new AssetDescriptor("data/audio/swordL.Attack.mp3", Sound.class));
+		assetList.add(new AssetDescriptor("data/audio/swordS.Attack.mp3", Sound.class));
+		assetList.add(new AssetDescriptor("data/audio/0100120.Damage.mp3", Sound.class));
+		assetList.add(new AssetDescriptor("data/audio/0100100.Die.mp3", Sound.class));
+		assetList.add(new AssetDescriptor("data/audio/DropItem.mp3", Sound.class));
+		assetList.add(new AssetDescriptor("data/audio/Jump.mp3", Sound.class));
+		assetList.add(new AssetDescriptor("data/controls.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/bg.jpg", Texture.class));
+		assetList.add(new AssetDescriptor("data/testbg.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/controls.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/ghost01.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/xiaoming.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/items/sword1.png", Texture.class));
+		
 		
 		for(int i = 0; i < 6; i++){
 			assetList.add(new AssetDescriptor("data/actor/swordeffect/sword_effect" + (i+1) + ".png", Texture.class));
@@ -123,6 +133,9 @@ public class MenuController {
 		}
 		for(int i = 0; i < 5; i++){
 			assetList.add(new AssetDescriptor("data/items/sword/" + (i+1) + ".png", Texture.class));
+		}
+		for(int i = 0; i < 10; i++){
+			assetList.add(new AssetDescriptor("data/number/tt" + i + ".png", Texture.class));
 		}
 		
 		game.setScreen(new Progress(game, assetList, "com.mygame.mxd.screens.GameScreen"));

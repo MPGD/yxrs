@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <levels >
 	<content level="0">
-	    <background name="data/bg.jpg"/>
+	    <background name="data/testbg.png"/>
 	    <bgm name=""/>
-		<block 	x1="0"	 x2="800"	 y="150"/>
-		<block x1="0"  x2="250"  y="280"/>
-		<block x1="600"  x2="800"  y="280"/>
+		<land x1="0"	 x2="1600"	 y="294"/>
+		<land x1="105"  x2="345"  y="349"/>
+		<land x1="258"  x2="513"  y="398"/>
+		<land x1="381"  x2="606"	 y="440"/>
+		<land x1="447"    x2="707"  y="502"/>
+		<land x1="525"    x2="800"  y="551"/>
+		<land x1="608"  x2="908"  y="597"/>
+		<rope x="751"  y1="322"  y2="551"/>
 		<enemy name="ghost" x="500" y="200"/>
 		<enemy name="ghost" x="500" y="275"/>
 		<enemy name="ghost" x="400" y="350"/>
@@ -13,11 +18,11 @@
 		<startright x="700" y="150"/>
 	</content>
 	<content level="1">
-	    <background name="data/bg.jpg"/>
+	    <background name="data/testbg.png"/>
 	    <bgm name=""/>
-		<block 	x1="0"	 x2="800"	 y="150"/>
-		<block x1="0"  x2="250"  y="280"/>
-		<block x1="600"  x2="800"  y="280"/>
+		<land 	x1="0"	 x2="800"	 y="150"/>
+		<land x1="0"  x2="250"  y="280"/>
+		<land x1="600"  x2="800"  y="280"/>
 		<enemy name="ghost" x="500" y="200"/> 
 		<enemy name="ghost" x="400" y="350"/>
 		<startleft x="100" y="400"/>
@@ -26,9 +31,9 @@
 	<content level="2">
 	    <background name="data/bg.jpg"/>
 	    <bgm name=""/>
-		<block 	x1="0"	 x2="800"	 y="150"/>
-		<block x1="0"  x2="250"  y="280"/>
-		<block x1="600"  x2="800"  y="280"/>
+		<land 	x1="0"	 x2="800"	 y="150"/>
+		<land x1="0"  x2="250"  y="280"/>
+		<land x1="600"  x2="800"  y="280"/>
 		<enemy name="ghost" x="500" y="200"/>
 		<enemy name="ghost" x="500" y="100"/>
 		<enemy name="ghost" x="400" y="350"/>

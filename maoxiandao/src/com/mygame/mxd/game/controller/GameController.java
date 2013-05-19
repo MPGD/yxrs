@@ -24,17 +24,45 @@ public class GameController {
 		xiaoming.idle();
 		
 		if(mGamePad != null){
-			if(GamePad.MOVE_LEFT == mGamePad.getGamePadInfo()) xiaoming.move(true);
-			if(GamePad.MOVE_RIGHT == mGamePad.getGamePadInfo()) xiaoming.move(false);
+			if((GamePad.MOVE_UP & mGamePad.getGamePadInfo()) != 0){
+				if(xiaoming.getStatus() == xiaoming.STATUS_CLIMB){
+					xiaoming.climb(true);
+				}else if(xiaoming.isJump()){
+					xiaoming.climbRope();
+				}
+			}
+			if((GamePad.MOVE_DOWN & mGamePad.getGamePadInfo()) != 0){
+				if(xiaoming.getStatus() == xiaoming.STATUS_CLIMB){
+					xiaoming.climb(false);
+				}
+			}
+			if((GamePad.MOVE_LEFT & mGamePad.getGamePadInfo()) != 0) xiaoming.move(true);
+			if((GamePad.MOVE_RIGHT & mGamePad.getGamePadInfo()) != 0) xiaoming.move(false);
 			if(mJump.isPressed()) xiaoming.jump();
 			if(mAttack.isPressed()) xiaoming.attack();
 		}
+		
 		
 		if(Gdx.input.isKeyPressed(Keys.A)){
 			xiaoming.move(true);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.D)){
 			xiaoming.move(false);
+		}
+		
+		if(Gdx.input.isKeyPressed(Keys.W)){
+			Gdx.app.debug("xujihao", "w pressed " + xiaoming.getStatus());
+			if(xiaoming.getStatus() == xiaoming.STATUS_CLIMB){
+				xiaoming.climb(true);
+			}else if(xiaoming.isJump()){
+				Gdx.app.debug("xujihao", "w and jump");
+				xiaoming.climbRope();
+			}
+		}
+		if(Gdx.input.isKeyPressed(Keys.S)){
+			if(xiaoming.getStatus() == xiaoming.STATUS_CLIMB){
+				xiaoming.climb(false);
+			}
 		}
 		
 		if(Gdx.input.isKeyPressed(Keys.J)){
