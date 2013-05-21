@@ -10,6 +10,13 @@ import com.mygame.mxd.game.actor.XiaoMing;
 import com.mygame.mxd.game.gameutils.GamePad;
 
 public class GameController {
+	public static int UP = 1;
+	public static int DOWN = 2;
+	public static int LEFT = 4;
+	public static int RIGHT = 8;
+	public static int JUMP = 16;
+	public static int ATTACK = 32;
+	
 	private XiaoMing xiaoming = null;
 	GameStage mGameStage;
 	private GamePad mGamePad = null;
@@ -21,58 +28,26 @@ public class GameController {
 	}
 	
 	public void process(){
-		xiaoming.idle();
-		
-		if(mGamePad != null){
-			if((GamePad.MOVE_UP & mGamePad.getGamePadInfo()) != 0){
-				if(xiaoming.getStatus() == xiaoming.STATUS_CLIMB){
-					xiaoming.climb(true);
-				}else if(xiaoming.isJump()){
-					xiaoming.climbRope();
-				}
-			}
-			if((GamePad.MOVE_DOWN & mGamePad.getGamePadInfo()) != 0){
-				if(xiaoming.getStatus() == xiaoming.STATUS_CLIMB){
-					xiaoming.climb(false);
-				}
-			}
-			if((GamePad.MOVE_LEFT & mGamePad.getGamePadInfo()) != 0) xiaoming.move(true);
-			if((GamePad.MOVE_RIGHT & mGamePad.getGamePadInfo()) != 0) xiaoming.move(false);
-			if(mJump.isPressed()) xiaoming.jump();
-			if(mAttack.isPressed()) xiaoming.attack();
+		int event = 0;
+		if(((GamePad.MOVE_UP & mGamePad.getInfo()) != 0) || Gdx.input.isKeyPressed(Keys.W)){
+			event |= UP;
 		}
-		
-		
-		if(Gdx.input.isKeyPressed(Keys.A)){
-			xiaoming.move(true);
+		if(((GamePad.MOVE_DOWN & mGamePad.getInfo()) != 0) || Gdx.input.isKeyPressed(Keys.S)){
+			event |= DOWN;
 		}
-		else if(Gdx.input.isKeyPressed(Keys.D)){
-			xiaoming.move(false);
+		if(((GamePad.MOVE_LEFT & mGamePad.getInfo()) != 0) || Gdx.input.isKeyPressed(Keys.A)){
+			event |= LEFT;
 		}
-		
-		if(Gdx.input.isKeyPressed(Keys.W)){
-			Gdx.app.debug("xujihao", "w pressed " + xiaoming.getStatus());
-			if(xiaoming.getStatus() == xiaoming.STATUS_CLIMB){
-				xiaoming.climb(true);
-			}else if(xiaoming.isJump()){
-				Gdx.app.debug("xujihao", "w and jump");
-				xiaoming.climbRope();
-			}
+		if(((GamePad.MOVE_RIGHT & mGamePad.getInfo()) != 0) || Gdx.input.isKeyPressed(Keys.D)){
+			event |= RIGHT;
 		}
-		if(Gdx.input.isKeyPressed(Keys.S)){
-			if(xiaoming.getStatus() == xiaoming.STATUS_CLIMB){
-				xiaoming.climb(false);
-			}
+		if(mJump.isPressed() || Gdx.input.isKeyPressed(Keys.J)){
+			event |= JUMP;
 		}
-		
-		if(Gdx.input.isKeyPressed(Keys.J)){
-			xiaoming.jump();
+		if(mAttack.isPressed() || Gdx.input.isKeyPressed(Keys.K)){
+			event |= ATTACK;
 		}
-		
-		if(Gdx.input.isKeyPressed(Keys.K)){
-			xiaoming.attack();
-		}
-
+		xiaoming.process(event, mGamePad.getPadX(), mGamePad.getPadY());
 	}
 	
 	public void setGamePad(GamePad gamePad){

@@ -1,6 +1,7 @@
 package com.mygame.mxd.game.actor;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
@@ -14,7 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
 import com.mygame.mxd.game.GameStage;
-import com.mygame.mxd.game.Rope;
+import com.mygame.mxd.game.controller.GameController;
+import com.mygame.mxd.game.gameutils.GamePad;
+import com.mygame.mxd.game.map.Ladder;
+import com.mygame.mxd.game.map.Rope;
 import com.mygame.mxd.game.utils.CollisionDetect;
 import com.mygame.mxd.menu.GameSound;
 
@@ -45,6 +49,7 @@ public class XiaoMing extends GameActor{
 	private Animation animationAttackEffect1;
 	private Animation animationAttackEffect2;
 	private Rope climbingRope = null;
+	private Ladder climbingLadder = null;
 	//战斗属性
 	public float strenth = 100;
 	public float defense = 10;
@@ -184,6 +189,22 @@ public class XiaoMing extends GameActor{
 			moveLeft = false;
 			setRealX(getRealX() + DataSet.MoveSpeed);
 		}
+		if(left){
+			for(int i = 0; i < mGameLevel.walls.size(); i++){
+				if(CollisionDetect.detect(this, mGameLevel.walls.get(i))){
+					setRealX(mGameLevel.walls.get(i).x);
+					break;
+				}
+			}
+		}else{
+			for(int i = 0; i < mGameLevel.walls.size(); i++){
+				if(CollisionDetect.detect(this, mGameLevel.walls.get(i))){
+					setRealX(mGameLevel.walls.get(i).x - getRealWidth());
+					break;
+					
+				}
+			}
+		}
 //		if(getRealX() < 0){
 //			if(!mGameLevel.loadPrevLevel()){
 //				setRealX(0);
@@ -198,7 +219,7 @@ public class XiaoMing extends GameActor{
 	}
 	
 	public void jump(){
-		if(isAttack) return;
+		if(isAttack || getStatus() == STATUS_CLIMB) return;
 		jump(DataSet.JumpV, DataSet.Gravity);
 	}
 	
@@ -228,6 +249,7 @@ public class XiaoMing extends GameActor{
 	
 	public void attack(){
 		if(isAttack) return;
+		if(getStatus() == STATUS_CLIMB) return;
 		if(getAniTime() < comboTime){
 			currAttackForm++;
 			if(currAttackForm == 3){
@@ -258,32 +280,112 @@ public class XiaoMing extends GameActor{
 	public void climb(boolean up){
 		if(up){
 			setRealY(getRealY() + DataSet.MoveSpeed);
+			for(int i = 0; i < mGameLevel.lands.size(); i++){
+				if(CollisionDetect.detect(this, mGameLevel.lands.get(i))){
+					if(getRealY() >= mGameLevel.lands.get(i).y){
+						Gdx.app.debug("xujihao", "get here xxxxxx 11111");
+						setRealY(mGameLevel.lands.get(i).y);
+						setStatus(STATUS_IDLE);
+						idle();
+						climbingRope = null;
+						climbingLadder = null;
+						break;
+					}
+				}
+			}
 		}else {
 			setRealY(getRealY() - DataSet.MoveSpeed);
+			if(climbingRope != null){
+				if(getRealY() < climbingRope.y1){
+					setStatus(STATUS_IDLE);
+					idle();
+					climbingRope = null;
+				}
+			}else if(climbingLadder != null){
+				if(getRealY() < climbingLadder.y1){
+					setStatus(STATUS_IDLE);
+					idle();
+					climbingLadder = null;
+				}
+			}
 		}
-		if(!CollisionDetect.detect(this, climbingRope)){
-			setStatus(STATUS_IDLE);
-			idle();
+		
+		
+		if(climbingRope != null){
+			if(!CollisionDetect.detect(this, climbingLadder)){
+				setStatus(STATUS_IDLE);
+				idle();
+				climbingRope = null;
+			}
+		}else if(climbingLadder != null){
+			if(!CollisionDetect.detect(this, climbingLadder)){
+				setStatus(STATUS_IDLE);
+				idle();
+				climbingLadder = null;
+			}
 		}
 	}
 	
-	public void climbRope(){
+	public boolean climbRope(boolean up){
 		Rope rope = null;
-		Gdx.app.debug("xujihao", "climbrope " + mGameLevel.ropes.size());
-		for(int i = 0; i < mGameLevel.ropes.size(); i++){
-			if(CollisionDetect.detect(this, mGameLevel.ropes.get(i))){
-				rope = mGameLevel.ropes.get(i);
-				break;
+		//Gdx.app.debug("xujihao", "climbrope " + mGameLevel.ropes.size());
+		if(up){
+			for(int i = 0; i < mGameLevel.ropes.size(); i++){
+				if(CollisionDetect.detect(this, mGameLevel.ropes.get(i)) && getRealY() + getRealHeight() < mGameLevel.ropes.get(i).y2){
+					rope = mGameLevel.ropes.get(i);
+					break;
+				}
+			}
+		}else{
+			if(!isJump){
+				for(int i = 0; i < mGameLevel.ropes.size(); i++){
+					if(CollisionDetect.detect(this, mGameLevel.ropes.get(i)) && getRealY() + getRealHeight() > mGameLevel.ropes.get(i).y2){
+						rope = mGameLevel.ropes.get(i);
+						break;
+					}
+				}
 			}
 		}
+
 		
 		if(rope != null){
 			climbingRope = rope;
 			if(isJump) stopJump();
 			setStatus(STATUS_CLIMB);
 			setRealX(rope.x - getRealWidth() / 2);
+			return true;
 		}
-
+		return false;
+	}
+	
+	public boolean climbLadder(boolean up){
+		Ladder ladder = null;
+		if(up){
+			for(int i = 0; i < mGameLevel.ladders.size(); i++){
+				if(CollisionDetect.detect(this, mGameLevel.ladders.get(i)) && getRealY() + getRealHeight() < mGameLevel.ladders.get(i).y2){
+					ladder = mGameLevel.ladders.get(i);
+					break;
+				}
+			}
+		}else{
+			if(!isJump){
+				for(int i = 0; i < mGameLevel.ladders.size(); i++){
+					if(CollisionDetect.detect(this, mGameLevel.ladders.get(i))&& getRealY() + getRealHeight() > mGameLevel.ladders.get(i).y2){
+						ladder = mGameLevel.ladders.get(i);
+						break;
+					}
+				}
+			}
+		}
+		if(ladder != null){
+			climbingLadder = ladder;
+			if(isJump) stopJump();
+			setStatus(STATUS_CLIMB);
+			setRealX(ladder.x - getRealWidth() / 2);
+			Gdx.app.debug("xujihao", "climb ladder ");
+			return true;
+		}
+		return false;
 	}
 	
 	public Rectangle getAttackArea(){
@@ -329,5 +431,46 @@ public class XiaoMing extends GameActor{
 		float ret = 0;
 		ret = strenth * 1.6f; 
 		return ret;
+	}
+	
+	public void process(int event, float x, float y){
+		if(event == 0){
+			idle();
+			return;
+		}
+		if(getStatus() != STATUS_CLIMB && (y > 80 || (event & GameController.UP) != 0)){
+			Gdx.app.log("xujihao", "get here xxxxxx 22222s");
+			if(!climbRope(true)){
+				climbLadder(true);
+			}
+		}else if(getStatus() != STATUS_CLIMB && ((y < 20 && y > 0)|| (event & GameController.DOWN) != 0)){
+			Gdx.app.log("xujihao", "get here xxxxxx 333333s");
+			if(!climbRope(false)){
+				climbLadder(false);
+			}
+		}
+		//Gdx.app.log("xujihao", "event is " + event);
+		if(getStatus() == STATUS_CLIMB){
+			if(y > 64 || (event & GameController.UP) != 0){
+				climb(true);
+			}else if(y > 0 || (event & GameController.DOWN) != 0){
+				climb(false);
+			}
+		}else{
+			if((event & GameController.LEFT) != 0){
+				move(true);
+			}
+			if((event & GameController.RIGHT) != 0){
+				move(false);
+			}
+		}
+
+
+		if((event & GameController.JUMP) != 0){
+			jump();
+		}
+		if((event & GameController.ATTACK) != 0){
+			attack();
+		}
 	}
 }

@@ -16,6 +16,10 @@ import com.mygame.mxd.game.utils.ItemDrop;
 import com.mygame.mxd.menu.GameSound;
 
 public class Badboy extends GameActor{
+	//attrib
+	public static int MOVE_TYPE_FLOAT = 1;
+	public static int MOVE_TYPE_WALK = 2;
+	public static int MOVE_TYPE_JUMP = 3;
 	
 	public static String BADBOY_IMG_SRC = "data/ghost01.png";
 	private float scaleX = 1f;

@@ -16,6 +16,11 @@ import com.badlogic.gdx.utils.XmlReader;
 import com.badlogic.gdx.utils.XmlReader.Element;
 import com.mygame.mxd.game.actor.Badboy;
 import com.mygame.mxd.game.actor.XiaoMing;
+import com.mygame.mxd.game.map.Ladder;
+import com.mygame.mxd.game.map.Land;
+import com.mygame.mxd.game.map.Rope;
+import com.mygame.mxd.game.map.Slope;
+import com.mygame.mxd.game.map.Wall;
 import com.mygame.mxd.screens.GameScreen;
 
 /*游戏关卡*/
@@ -30,6 +35,9 @@ public class GameLevel implements Disposable{
 	
 	public ArrayList<Land> lands = new ArrayList<Land>();
 	public ArrayList<Rope> ropes = new ArrayList<Rope>();
+	public ArrayList<Ladder> ladders = new ArrayList<Ladder>();
+	public ArrayList<Slope> slopes = new ArrayList<Slope>();
+	public ArrayList<Wall> walls = new ArrayList<Wall>();
 	
 	public GameLevel(GameScreen gameScreen){
 		mGameScreen = gameScreen;
@@ -71,7 +79,7 @@ public class GameLevel implements Disposable{
 			for(int i = 0; i < element.getChildCount(); i++){
 				Element child = element.getChild(i);
 				if(child.getName().equals("background")){
-					setScene(new GameScene(child.getAttribute("name")));
+					setScene(new GameScene(child.getAttribute("front"), child.getAttribute("back")));
 				}else if(child.getName().equals("bgm")){
 				}else if(child.getName().equals("land")){
 					addLand(new Land(Float.valueOf(child.getAttribute("x1")), Float.valueOf(child.getAttribute("x2")), Float.valueOf(child.getAttribute("y"))));
@@ -114,6 +122,12 @@ public class GameLevel implements Disposable{
 	public void addRope(Rope rope){
 		ropes.add(rope);
 	}
+	public void addLadder(Ladder ladder){
+		ladders.add(ladder);
+	}
+	public void addWall(Wall wall){
+		walls.add(wall);
+	}
 	
 	public void setLevel(int level){
 		this.level = level;
@@ -131,17 +145,29 @@ public class GameLevel implements Disposable{
 		mGameStage.getCamera().position.lerp(lerpTarget.set(xiaoming.getRealX(), xiaoming.getRealY(), 0), 2f * delta);
 		if(mGameStage.getCamera().position.x < DataSet.ScreenWidth / 2){
 			mGameStage.getCamera().position.x = DataSet.ScreenWidth / 2;
-		}else if(mGameStage.getCamera().position.x > mGameScene.getTexture().getWidth() - DataSet.ScreenWidth / 2){
-			mGameStage.getCamera().position.x = mGameScene.getTexture().getWidth() - DataSet.ScreenWidth / 2;
+		}else if(mGameStage.getCamera().position.x > mGameScene.getBackgroundLayer1().getWidth() - DataSet.ScreenWidth / 2){
+			mGameStage.getCamera().position.x = mGameScene.getBackgroundLayer1().getWidth() - DataSet.ScreenWidth / 2;
 		}
 		
 		if(mGameStage.getCamera().position.y < DataSet.ScreenHeight / 2){
 			mGameStage.getCamera().position.y = DataSet.ScreenHeight / 2;
-		}else if(mGameStage.getCamera().position.y > mGameScene.getTexture().getHeight() - DataSet.ScreenHeight / 2){
-			mGameStage.getCamera().position.y = mGameScene.getTexture().getHeight() - DataSet.ScreenHeight / 2;
+		}else if(mGameStage.getCamera().position.y > mGameScene.getBackgroundLayer1().getHeight() - DataSet.ScreenHeight / 2){
+			mGameStage.getCamera().position.y = mGameScene.getBackgroundLayer1().getHeight() - DataSet.ScreenHeight / 2;
 		}
+		float layerWidth1 = mGameScene.getBackgroundLayer1().getWidth();
+		float layerWidth2 = mGameScene.getBackgroundLayer2().getWidth();
+		float halfScreenWidth = DataSet.ScreenWidth / 2;
+		float cameraOffsetX = mGameStage.getCamera().position.x - DataSet.ScreenWidth / 2;
+		float layerOffsetX = cameraOffsetX * (layerWidth1 - layerWidth2) / (layerWidth1 - halfScreenWidth * 2);
+		float layer2StartPosY = Math.max(0, DataSet.ScreenHeight - mGameScene.getBackgroundLayer2().getHeight());
+		float layerHeight1 = mGameScene.getBackgroundLayer1().getHeight();
+		float layerHeight2 = mGameScene.getBackgroundLayer2().getHeight();
+		float halfScreenHeight = DataSet.ScreenHeight / 2;
+		float cameraOffsetY = mGameStage.getCamera().position.y - DataSet.ScreenHeight / 2;
+		float layerOffsetY = layer2StartPosY + cameraOffsetY * (layerHeight1 - layerHeight2 - layer2StartPosY) / (layerHeight1 - halfScreenHeight * 2);
 		mGameStage.getSpriteBatch().begin();
-		mGameStage.getSpriteBatch().draw(mGameScene.getTexture(), 0, 0);
+		mGameStage.getSpriteBatch().draw(mGameScene.getBackgroundLayer2(), layerOffsetX, layerOffsetY);
+		mGameStage.getSpriteBatch().draw(mGameScene.getBackgroundLayer1(), 0, 0);
 		mGameStage.getSpriteBatch().end();
 		mGameStage.act(delta);
 		mGameStage.update(delta);

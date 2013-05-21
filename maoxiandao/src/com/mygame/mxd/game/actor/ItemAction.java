@@ -3,8 +3,8 @@ package com.mygame.mxd.game.actor;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.scenes.scene2d.Action;
-import com.mygame.mxd.game.Land;
 import com.mygame.mxd.game.GameStage;
+import com.mygame.mxd.game.map.Land;
 import com.mygame.mxd.game.utils.CollisionDetect;
 
 public class ItemAction extends Action{

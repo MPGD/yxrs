@@ -22,6 +22,8 @@ public class GamePad extends Actor implements Disposable{
 	private Sprite sPad;
 	private int mEvent = 0;
 	private Texture textureControls = null;
+	private float px;
+	private float py;
 	public GamePad(){
 		textureControls = AssetManagerSingleton.manager.get("data/controls.png");
 		TextureRegion[] buttons = TextureRegion.split(textureControls, 64, 64)[0];
@@ -34,13 +36,12 @@ public class GamePad extends Actor implements Disposable{
 			public void touchDown(InputEvent event, float x, float y,
 					int pointer, int button) { 
 				// TODO Auto-generated method stub
-				if(x < 64) mEvent |= MOVE_LEFT;
-				else mEvent |= MOVE_RIGHT;
+				if(x < 64) mEvent = MOVE_LEFT;
+				else mEvent = MOVE_RIGHT;
 
-				if(y > 64) mEvent |= MOVE_UP;
-				else mEvent |= MOVE_DOWN;
-
-				Gdx.app.debug("xujihao", "mEvent is " + mEvent);
+				px = x;
+				py = y;
+				Gdx.app.log("xujihao", "mEvent is " + mEvent + " x = " + x + "pad x = " + GamePad.this.getX());
 			}
 
 			@Override
@@ -48,23 +49,21 @@ public class GamePad extends Actor implements Disposable{
 					float deltaY) {
 				// TODO Auto-generated method stub
 
-				if(x < 64) mEvent |= MOVE_LEFT;
-				else mEvent |= MOVE_RIGHT;
-
-				if(y > 64) mEvent |= MOVE_UP;
-				else mEvent |= MOVE_DOWN;
-				
-				Gdx.app.debug("xujihao", "mEvent is " + mEvent);
+				if(x < 64) mEvent = MOVE_LEFT;
+				else mEvent = MOVE_RIGHT;
+				px = x;
+				py = y;
+				Gdx.app.log("xujihao", "pan mEvent is " + mEvent + " x = " + x);
 			}
 
 			@Override
 			public boolean longPress(Actor actor, float x, float y) {
 				// TODO Auto-generated method stub
-				if(x < 64) mEvent |= MOVE_LEFT;
-				else mEvent |= MOVE_RIGHT;
-
-				if(y > 64) mEvent |= MOVE_UP;
-				else mEvent |= MOVE_DOWN;
+				if(x < 64) mEvent = MOVE_LEFT;
+				else mEvent = MOVE_RIGHT;
+				px = x;
+				py = y;
+				Gdx.app.log("xujihao", "longPress mEvent is " + mEvent + " x = " + x);
 				return true;
 			}
 
@@ -72,7 +71,10 @@ public class GamePad extends Actor implements Disposable{
 			public void touchUp(InputEvent event, float x, float y,
 					int pointer, int button) {
 				// TODO Auto-generated method stub
+				px = x;
+				py = y;
 				mEvent = 0;
+				Gdx.app.debug("xujihao", "touchUp mEvent");
 			}
 			
 		};
@@ -89,10 +91,18 @@ public class GamePad extends Actor implements Disposable{
 		sPad.draw(batch, parentAlpha);
 	}
 	
-	public int getGamePadInfo(){
+	public int getInfo(){
+		//Gdx.app.log("xujihao", "event is " + mEvent);
 		return mEvent;
 	}
 
+	public float getPadX(){
+		return px;
+	}
+	
+	public float getPadY(){
+		return py;
+	}
 	@Override
 	public void dispose() {
 		// TODO Auto-generated method stub

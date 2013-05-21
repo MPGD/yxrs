@@ -10,13 +10,13 @@ import com.mygame.mxd.game.GameStage;
 
 public abstract class GameActor extends Actor{
 	public static int STATUS_IDLE = 0;
-	public static int STATUS_MOVE = -1;
-	public static int STATUS_JUMP = -2;
-	public static int STATUS_ATTACK = -3;
-	public static int STATUS_HURT = -4;
-	public static int STATUS_MAGIC = -5;
-	public static int STATUS_CLIMB = -6;
-	public static int STATUS_DIE = -7;
+	public static int STATUS_MOVE = 1;
+	public static int STATUS_JUMP = 2;
+	public static int STATUS_ATTACK = 4;
+	public static int STATUS_HURT = 8;
+	public static int STATUS_MAGIC = 16;
+	public static int STATUS_CLIMB = 32;
+	public static int STATUS_DIE = 64;
 	
 	public GameLevel mGameLevel;
 	protected boolean moveLeft = false;

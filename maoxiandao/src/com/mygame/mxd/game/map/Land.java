@@ -1,4 +1,4 @@
-package com.mygame.mxd.game;
+package com.mygame.mxd.game.map;
 
 /**
  * 地图上用来行走的块的设定
