@@ -1,5 +1,7 @@
 package com.mygame.mxd.game;
 
+import java.io.File;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygame.mxd.game.gameutils.GamePad;
+import com.mygame.mxd.game.options.CharacterEquipments;
 import com.mygame.mxd.game.options.Pack;
 import com.mygame.mxd.game.options.PackGroup;
 
@@ -45,8 +48,12 @@ public class GameUtilStage extends Stage {
 				pack);
 		mPackGroup.setPosition(DataSet.SCREEN_WIDGHT - mPackGroup.getTitleWidth(),
 				DataSet.SCREEN_HEIGHT - mPackGroup.getTitleHeight());
+		CharacterEquipments mCharacterEquipments = new CharacterEquipments();
 		
 		addActor(mPackGroup);
+		mCharacterEquipments.readEquipments(new File("src/data/items/items.xml"));
+		mCharacterEquipments.refresh(pack);
+		addActor(mCharacterEquipments);
 	}
 
 	@Override
