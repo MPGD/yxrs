@@ -116,6 +116,9 @@ public class MenuController {
 		assetList.add(new AssetDescriptor("data/items/sword1.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/maps/mxd_1_1back.jpg", Texture.class));
 		assetList.add(new AssetDescriptor("data/maps/mxd_1_1front.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/square.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/menu/pack_title1.png", Texture.class));
+
 		
 		for(int i = 0; i < 6; i++){
 			assetList.add(new AssetDescriptor("data/actor/swordeffect/sword_effect" + (i+1) + ".png", Texture.class));

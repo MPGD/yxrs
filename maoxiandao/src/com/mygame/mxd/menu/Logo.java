@@ -62,6 +62,8 @@ public class Logo extends BaseScreen {
 		assetList.add(new AssetDescriptor("data/menu/button2_480.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/menu/game_logo.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/menu/shadow.png", Texture.class));
+//		assetList.add(new AssetDescriptor("data/menu/square.png", Texture.class));
+//		assetList.add(new AssetDescriptor("data/menu/pack_title1.png", Texture.class));
 
 		batch = new SpriteBatch();
 

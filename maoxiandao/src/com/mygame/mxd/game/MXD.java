@@ -9,10 +9,11 @@ public class MXD extends Game {
 	@Override
 	public void create() {
 
-		//DataSet.ScreenWidth = Gdx.graphics.getWidth();
-		//DataSet.ScreenHeight = Gdx.graphics.getHeight();
+		// 使用于权重
+		DataSet.SCREEN_WIDGHT = Gdx.graphics.getWidth();
+		DataSet.SCREEN_HEIGHT = Gdx.graphics.getHeight();
 
-		 //setScreen(new GameScreen(this));
+		// setScreen(new GameScreen(this));
 		setScreen(new Logo(this));
 	}
 }

@@ -8,7 +8,11 @@ public class DataSet {
 	// 游戏音乐默认等级
 	public static float MUSIC_VOLUME = 1.0f;
 	public static float SOUND_VOLUME = 1.0f;
-	public static boolean AUDIO_TOGGLE=true;
+	public static boolean AUDIO_TOGGLE = true;
+
+	// 使用于图片显示大小权重
+	public static float SCREEN_HEIGHT;
+	public static float SCREEN_WIDGHT;
 
 	// 游戏行为
 

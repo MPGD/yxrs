@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
+import com.mygame.mxd.game.options.Pack;
+import com.mygame.mxd.game.options.PackGroup;
 import com.mygame.mxd.screens.BaseScreen;
 
 public class MainMenu extends BaseScreen {
@@ -55,6 +57,14 @@ public class MainMenu extends BaseScreen {
 
 		mMenuController = new MenuController(this, game, stage);
 
+//		Pack pack = new Pack((Texture) AssetManagerSingleton.manager.get("data/menu/square.png"));
+//		PackGroup mPackGroup = new PackGroup((Texture) AssetManagerSingleton.manager.get("data/menu/pack_title1.png"),
+//				pack);
+//		mPackGroup.setPosition(DataSet.SCREEN_WIDGHT - mPackGroup.getTitleWidth(),
+//				DataSet.SCREEN_HEIGHT - mPackGroup.getTitleHeight());
+//		Gdx.app.debug("xue", mPackGroup.getTitleWidth()+"::"+mPackGroup.getTitleHeight());
+//		stage.addActor(mPackGroup);
+
 	}
 
 	@Override
@@ -63,10 +73,6 @@ public class MainMenu extends BaseScreen {
 		Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT);
 		stage.draw();
 		mMenuController.update();
-
-		// batch.begin();
-		// ninePatch.draw(batch, 100, 100, 159, 159);
-		// batch.end();
 
 	}
 
