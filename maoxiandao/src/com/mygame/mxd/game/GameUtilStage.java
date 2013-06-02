@@ -1,6 +1,6 @@
 package com.mygame.mxd.game;
 
-import java.io.File;
+import java.util.List;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -11,9 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mygame.mxd.game.gameutils.GamePad;
-import com.mygame.mxd.game.options.CharacterEquipments;
-import com.mygame.mxd.game.options.Pack;
-import com.mygame.mxd.game.options.PackGroup;
+import com.mygame.mxd.game.options.ActionBar;
+import com.mygame.mxd.game.options.CharacterPack;
+import com.mygame.mxd.game.options.Equipment;
+import com.mygame.mxd.game.options.EquipmentHandle;
+import com.mygame.mxd.game.options.PackSource;
 
 public class GameUtilStage extends Stage {
 
@@ -21,6 +23,10 @@ public class GameUtilStage extends Stage {
 	public Button buttJump;
 	public Button buttAttack;
 	private Texture texture;
+
+	private Button btn_pack;
+	private CharacterPack characterPack;
+	public static PackSource packSource;
 
 	public GameUtilStage(float width, float height, boolean keepAspectRatio) {
 		super(width, height, keepAspectRatio);
@@ -43,18 +49,43 @@ public class GameUtilStage extends Stage {
 		addActor(buttAttack);
 
 		// 测试背包代码
-		Pack pack = new Pack((Texture) AssetManagerSingleton.manager.get("data/menu/square.png"));
-		PackGroup mPackGroup = new PackGroup((Texture) AssetManagerSingleton.manager.get("data/menu/pack_title1.png"),
-				pack);
-		mPackGroup.setPosition(DataSet.SCREEN_WIDGHT - mPackGroup.getTitleWidth(),
-				DataSet.SCREEN_HEIGHT - mPackGroup.getTitleHeight());
-		CharacterEquipments mCharacterEquipments = new CharacterEquipments();
-		
-		addActor(mPackGroup);
-		mCharacterEquipments.readEquipments(new File("src/data/items/items.xml"));
-		mCharacterEquipments.refresh(pack);
-		addActor(mCharacterEquipments);
+
+		Texture mtexture2 = AssetManagerSingleton.manager.get("data/items/options/ic_launcher.png");
+		Button button = new Button(new TextureRegionDrawable(new TextureRegion(mtexture2)));
+		btn_pack = new Button(new TextureRegionDrawable(new TextureRegion(mtexture2)), new TextureRegionDrawable(
+				new TextureRegion(mtexture2)));
+		Button button3 = new Button(new TextureRegionDrawable(new TextureRegion(mtexture2)));
+		Button[] buttons = { button, btn_pack, button3 };
+		ActionBar actionBar = new ActionBar(this, buttons);
+		actionBar.addListener(listener);
+
+		// EquipmentHandle mEquipmentHandle = new
+		// EquipmentHandle("data/items/itemsMe.xml");
+		characterPack = new CharacterPack(this, actionBar);
+		packSource = new PackSource(new EquipmentHandle("data/items/itemsMe.xml"), characterPack);
+
+		characterPack.setSource(packSource.getEquipments());
+		characterPack.show();
+		characterPack.setVisible(false);
+
 	}
+
+	private ClickListener listener = new ClickListener() {
+		public void clicked(InputEvent event, float x, float y) {
+			Gdx.app.debug("xue", "listener:" + event.getListenerActor());
+			if (event.getListenerActor() == btn_pack) {
+
+				if (characterPack.isVisible()) {
+					characterPack.setVisible(false);
+					Gdx.app.debug("xue", "disable");
+					return;
+				}
+				characterPack.setVisible(true);
+				Gdx.app.debug("xue", "visible");
+				return;
+			}
+		}
+	};
 
 	@Override
 	public void dispose() {

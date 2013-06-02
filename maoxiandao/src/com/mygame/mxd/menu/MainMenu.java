@@ -14,7 +14,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.utils.XmlReader;
 import com.mygame.mxd.game.AssetManagerSingleton;
 import com.mygame.mxd.game.DataSet;
-import com.mygame.mxd.game.options.CharacterEquipments;
 import com.mygame.mxd.screens.BaseScreen;
 
 public class MainMenu extends BaseScreen {
@@ -52,25 +51,8 @@ public class MainMenu extends BaseScreen {
 
 		stage.setBG((Texture) AssetManagerSingleton.manager.get("data/menu/menu_bg2.png"));
 
-		TextureRegion tr = new TextureRegion(new Texture("data/menu/block.png"));
-		ninePatch = new NinePatch(tr, tr, tr, tr, tr, tr, tr, tr, tr);
-
 		mMenuController = new MenuController(this, game, stage);
 
-		// Pack pack = new Pack((Texture)
-		// AssetManagerSingleton.manager.get("data/menu/square.png"));
-		// PackGroup mPackGroup = new PackGroup((Texture)
-		// AssetManagerSingleton.manager.get("data/menu/pack_title1.png"),
-		// pack);
-		// mPackGroup.setPosition(DataSet.SCREEN_WIDGHT -
-		// mPackGroup.getTitleWidth(),
-		// DataSet.SCREEN_HEIGHT - mPackGroup.getTitleHeight());
-		// Gdx.app.debug("xue",
-		// mPackGroup.getTitleWidth()+"::"+mPackGroup.getTitleHeight());
-		// stage.addActor(mPackGroup);
-
-//		CharacterEquipments c = new CharacterEquipments();
-//		c.readEquipments(new File("src/data/items/items.xml"));
 	}
 
 	@Override

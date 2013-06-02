@@ -1,0 +1,11 @@
+<item-description>
+	<level value="100">
+		<item name="hello">
+			<type name="null"/>
+			<path name="null"/>
+			<description name="null"/>
+			<effect defense="0" lucky="0"/>
+			<probability value="0.0"/>
+		</item>
+	</level>
+</item-description>

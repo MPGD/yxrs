@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetDescriptor;
 import com.badlogic.gdx.assets.AssetManager;
@@ -60,7 +61,6 @@ public class MenuController {
 		layout.btn_back.addListener(click);
 
 		action = new Action();
-		
 
 	}
 
@@ -71,7 +71,7 @@ public class MenuController {
 			layout.soundHandler.addAction(action.s_moveIn);
 			layout.btn_back.addAction(action.b_moveIn);
 			layout.shadow.addAction(action.fade_in);
-			
+
 			layout.btn_start.setVisible(false);
 			layout.btn_settings.setVisible(false);
 			layout.btn_more.setVisible(false);
@@ -87,20 +87,19 @@ public class MenuController {
 			layout.btn_more.setVisible(false);
 
 		}
-		
 
 		stage.act();
 
 	}
 
-	private void goGame(){
+	private void goGame() {
 		AssetManager manager;
 		ArrayList<AssetDescriptor> assetList;
-		
+
 		manager = AssetManagerSingleton.getManager();
 		assetList = new ArrayList<AssetDescriptor>();
 
-		//audio
+		// audio
 		assetList.add(new AssetDescriptor("data/audio/swordL.Attack.mp3", Sound.class));
 		assetList.add(new AssetDescriptor("data/audio/swordS.Attack.mp3", Sound.class));
 		assetList.add(new AssetDescriptor("data/audio/0100120.Damage.mp3", Sound.class));
@@ -117,34 +116,34 @@ public class MenuController {
 		assetList.add(new AssetDescriptor("data/maps/mxd_1_1back.jpg", Texture.class));
 		assetList.add(new AssetDescriptor("data/maps/mxd_1_1front.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/menu/square.png", Texture.class));
-		assetList.add(new AssetDescriptor("data/menu/pack_title1.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/items/options/Item.backgrnd.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/items/options/ic_launcher.png", Texture.class));
 
-		
-		for(int i = 0; i < 6; i++){
-			assetList.add(new AssetDescriptor("data/actor/swordeffect/sword_effect" + (i+1) + ".png", Texture.class));
+		for (int i = 0; i < 6; i++) {
+			assetList.add(new AssetDescriptor("data/actor/swordeffect/sword_effect" + (i + 1) + ".png", Texture.class));
 		}
-		for(int i = 0; i < 5; i++){
-			assetList.add(new AssetDescriptor("data/items/cap/" + (i+1) + ".png", Texture.class));
+		for (int i = 0; i < 5; i++) {
+			assetList.add(new AssetDescriptor("data/items/cap/" + (i + 1) + ".png", Texture.class));
 		}
-		for(int i = 0; i < 5; i++){
-			assetList.add(new AssetDescriptor("data/items/cape/" + (i+1) + ".png", Texture.class));
+		for (int i = 0; i < 5; i++) {
+			assetList.add(new AssetDescriptor("data/items/cape/" + (i + 1) + ".png", Texture.class));
 		}
-		for(int i = 0; i < 5; i++){
-			assetList.add(new AssetDescriptor("data/items/coat/" + (i+1) + ".png", Texture.class));
+		for (int i = 0; i < 5; i++) {
+			assetList.add(new AssetDescriptor("data/items/coat/" + (i + 1) + ".png", Texture.class));
 		}
-		for(int i = 0; i < 5; i++){
-			assetList.add(new AssetDescriptor("data/items/glove/" + (i+1) + ".png", Texture.class));
+		for (int i = 0; i < 5; i++) {
+			assetList.add(new AssetDescriptor("data/items/glove/" + (i + 1) + ".png", Texture.class));
 		}
-		for(int i = 0; i < 5; i++){
-			assetList.add(new AssetDescriptor("data/items/sword/" + (i+1) + ".png", Texture.class));
+		for (int i = 0; i < 5; i++) {
+			assetList.add(new AssetDescriptor("data/items/sword/" + (i + 1) + ".png", Texture.class));
 		}
-		for(int i = 0; i < 10; i++){
+		for (int i = 0; i < 10; i++) {
 			assetList.add(new AssetDescriptor("data/number/tt" + i + ".png", Texture.class));
 		}
-		
+
 		game.setScreen(new Progress(game, assetList, "com.mygame.mxd.screens.GameScreen"));
 	}
-	
+
 	private ClickListener click = new ClickListener() {
 		@Override
 		public void clicked(InputEvent event, float x, float y) {
@@ -194,7 +193,7 @@ public class MenuController {
 					music.rePlay();
 
 					try {
-						FileWriter writer = new FileWriter("src/data/menu/conf.xml");
+						FileWriter writer = new FileWriter(Gdx.files.external("conf.xml").file());
 						XmlWriter xw = new XmlWriter(writer);
 						xw.element("Volume");
 						xw.element("music", music.getVolume());

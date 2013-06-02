@@ -14,25 +14,12 @@ public class Equipment {
 	public static final String EFFECT = "effect";
 	public static final String VALUE = "value";
 
-	public Level level = new Level();
-	public Level.Name name = level.new Name();
-	public Level.Name.Effect effect = name.new Effect();
-
-	class Level {
-		public int levelValue;
-
-		class Name {
-
-			public String itemName;
-			public String type;
-			public String path;
-			public String description;
-			public float probability;
-
-			class Effect {
-				public int defense;
-				public int lucky;
-			}
-		}
-	}
+	public int level;
+	public String name;
+	public String type;
+	public String path;
+	public String description;
+	public float probability;
+	public int defense;
+	public int lucky;
 }

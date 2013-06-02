@@ -11,8 +11,8 @@ public class DataSet {
 	public static boolean AUDIO_TOGGLE = true;
 
 	// 使用于图片显示大小权重
-	public static float SCREEN_HEIGHT;
-	public static float SCREEN_WIDGHT;
+	public static float SCREEN_HEIGHT = 480;
+	public static float SCREEN_WIDGHT = 800;
 
 	// 游戏行为
 
