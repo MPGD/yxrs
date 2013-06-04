@@ -1,5 +1,6 @@
 package com.mygame.mxd.game.actor;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -18,23 +19,24 @@ public class Item extends Actor implements Disposable{
 		setName("item");
 		setPosition(x, y); 
 		setSize(30, 30);
-		rotateAction = Actions.rotateBy(30);
+		//rotateAction = Actions.rotateBy(30);
 		addAction(Actions.sequence(new ItemAction(), Actions.run(new Runnable() {
 			
 			@Override
 			public void run() {
 				// TODO Auto-generated method stub
-				removeAction(rotateAction);
+				//removeAction(rotateAction);
 				setRotation(0);
 			}
 		})));
-		addAction(rotateAction);
+		//addAction(rotateAction);
 		
 	}
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
-		item.rotate(getRotation());
+		//Gdx.app.log("xujihao", " rotation is " + getRotation());
+		item.setRotation(getRotation());
 		item.setPosition(getX(), getY());
 		item.draw(batch, parentAlpha);
 	}

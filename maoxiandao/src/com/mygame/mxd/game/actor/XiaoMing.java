@@ -20,6 +20,7 @@ import com.mygame.mxd.game.gameutils.GamePad;
 import com.mygame.mxd.game.map.Ladder;
 import com.mygame.mxd.game.map.Rope;
 import com.mygame.mxd.game.utils.CollisionDetect;
+import com.mygame.mxd.game.utils.Probablity;
 import com.mygame.mxd.menu.GameSound;
 
 public class XiaoMing extends GameActor{
@@ -51,8 +52,17 @@ public class XiaoMing extends GameActor{
 	private Rope climbingRope = null;
 	private Ladder climbingLadder = null;
 	//战斗属性
+	public int level = 1;
+	public int totalHP = 200;
+	public int totalMP = 100;
+	public int expToLevelUp = 1000;
+	public int hp = 200;
+	public int mp = 100;
+	public int exp = 333;
 	public float strenth = 100;
 	public float defense = 10;
+	public float dodge = 10;
+	public float accuracy = 100;
 	
 	public XiaoMing(){
 		Texture temp = AssetManagerSingleton.manager.get(XIAOMING_IMG_SRC);
@@ -205,15 +215,11 @@ public class XiaoMing extends GameActor{
 				}
 			}
 		}
-//		if(getRealX() < 0){
-//			if(!mGameLevel.loadPrevLevel()){
-//				setRealX(0);
-//			}
-//		}else if(getRealX() > DataSet.ScreenWidth - getRealWidth()){
-//			if(!mGameLevel.loadNextLevel()){
-//				setRealX(DataSet.ScreenWidth - getRealWidth());
-//			}
-//		}
+		if(getRealX() < 0){
+			setRealX(0);
+		}else if(getRealX() > mGameLevel.getScene().getBackgroundLayer1().getWidth() - getRealWidth()){
+			setRealX(mGameLevel.getScene().getBackgroundLayer1().getWidth() - getRealWidth());
+		}
 		if(!isAttack)
 			setStatus(STATUS_MOVE);
 	}
@@ -368,10 +374,13 @@ public class XiaoMing extends GameActor{
 				}
 			}
 		}else{
+			Gdx.app.debug("xujihao", "climb ladder 111");
 			if(!isJump){
 				for(int i = 0; i < mGameLevel.ladders.size(); i++){
+					Gdx.app.debug("xujihao", "climb ladder down");
 					if(CollisionDetect.detect(this, mGameLevel.ladders.get(i))&& getRealY() + getRealHeight() > mGameLevel.ladders.get(i).y2){
 						ladder = mGameLevel.ladders.get(i);
+						Gdx.app.debug("xujihao", "climb ladder down in");
 						break;
 					}
 				}
@@ -405,9 +414,20 @@ public class XiaoMing extends GameActor{
 	}
 	
 	@Override
-	public boolean isHurt() {
+	public boolean isHurt(GameActor badboy) {
 		// TODO Auto-generated method stub
-		return true;
+		boolean ret = false;
+		Badboy b = (Badboy)badboy;
+		if(b.accuracy - this.dodge < 0){
+			
+		}else if(b.accuracy - this.dodge > 100){
+			ret = true;
+		}else{
+			if(Probablity.checkEvent((b.accuracy - this.dodge) / 100f)){
+				ret = true;
+			}
+		}
+		return ret;
 	}
 	
 	public boolean isJump(){
@@ -421,6 +441,19 @@ public class XiaoMing extends GameActor{
 		return controllable;
 	}
 
+	public void hurt(boolean hurtLeft, Badboy badboy){
+		float loseHp = badboy.damage - this.defense;
+		if(loseHp < 1) loseHp = 1;
+		hp -= loseHp;
+		if(hp <= 0){
+			die();
+		}
+		addAction(new HurtAction(hurtLeft));
+	}
+	
+	public void die(){
+		setStatus(STATUS_DIE);
+	}
 	@Override
 	public void checkPostionCallBack() {
 		// TODO Auto-generated method stub

@@ -17,6 +17,7 @@ public class GameAccidentDetect {
 	/* 如果行为被意外探测器锁定，不再处理按键控制 */
 	private boolean needControl = true;
 	private boolean hurtLeft = false;
+	private Badboy badboy;
 	public GameAccidentDetect(GameScreen gameScreen) {
 		mGameStage = gameScreen.getGameLevel().getGameStage();
 		xiaoming = gameScreen.getXiaoMing();
@@ -40,11 +41,17 @@ public class GameAccidentDetect {
 			detectAttack(xiaoming.getAttackArea());
 		}
 		
-		if (detectCollision()) {
-			needControl = false;
-			if(xiaoming.isHurt())
-				xiaoming.addAction(new HurtAction(hurtLeft));
+		if(xiaoming.getStatus() != xiaoming.STATUS_HURT){
+			if (detectCollision()) {
+				needControl = false;
+				if(xiaoming.isHurt(badboy)){
+					xiaoming.hurt(hurtLeft, badboy);
+				}
+				badboy.ignore();
+				badboy = null;
+			}
 		}
+
 	}
 
 	public void detectAttack(Rectangle attackArea){
@@ -56,7 +63,7 @@ public class GameAccidentDetect {
 					if (CollisionDetect.detect(new Rectangle(actor.getRealX(),
 							actor.getRealY(), actor.getRealWidth(), actor.getRealHeight()),
 									attackArea)) {
-						if(actor.isHurt() && actor.getStatus() != GameActor.STATUS_HURT){
+						if(actor.isHurt(xiaoming) && actor.getStatus() != GameActor.STATUS_HURT){
 							actor.beAttacked();
 
 						}
@@ -77,6 +84,8 @@ public class GameAccidentDetect {
 		for (int i = 0; i < children.size; i++) {
 			if(children.get(i) instanceof Badboy){
 				Badboy actor = (Badboy) children.get(i);
+				if(actor.isIgnore())
+					continue;
 				if (actor.getName().equals("guaiwu") && !actor.isDied()) {
 					if (CollisionDetect.detect(new Rectangle(actor.getRealX(),
 							actor.getRealY(), actor.getRealWidth(), actor.getRealHeight()),
@@ -87,7 +96,7 @@ public class GameAccidentDetect {
 						}else{
 							hurtLeft = false;
 						}
-								
+						badboy = actor;
 						ret = true;
 						break;
 					}

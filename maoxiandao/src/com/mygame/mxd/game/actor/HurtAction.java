@@ -3,6 +3,7 @@ package com.mygame.mxd.game.actor;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Action;
 import com.mygame.mxd.game.DataSet;
+import com.mygame.mxd.game.utils.CollisionDetect;
 /** 保持受伤状态持续一秒*/
 public class HurtAction extends Action{
 	private boolean beginFlag = false;
@@ -31,12 +32,29 @@ public class HurtAction extends Action{
 			gActor.setRealX(gActor.getRealX() + 3);
 		}
 		
+		if(hurtLeft){
+			for(int i = 0; i < gActor.mGameLevel.walls.size(); i++){
+				if(CollisionDetect.detect(gActor, gActor.mGameLevel.walls.get(i))){
+					gActor.setRealX(gActor.mGameLevel.walls.get(i).x);
+					break;
+				}
+			}
+		}else{
+			for(int i = 0; i < gActor.mGameLevel.walls.size(); i++){
+				if(CollisionDetect.detect(gActor, gActor.mGameLevel.walls.get(i))){
+					gActor.setRealX(gActor.mGameLevel.walls.get(i).x - gActor.getRealWidth());
+					break;
+					
+				}
+			}
+		}
 		if(gActor.getRealX() < 0){
 			gActor.setRealX(0);
-		}else if(gActor.getRealX() > DataSet.ScreenWidth - gActor.getRealWidth()){
-			gActor.setRealX(DataSet.ScreenWidth - gActor.getRealWidth());
+		}else if(gActor.getRealX() > gActor.mGameLevel.getScene().getBackgroundLayer1().getWidth() - gActor.getRealWidth()){
+			gActor.setRealX(gActor.mGameLevel.getScene().getBackgroundLayer1().getWidth() - gActor.getRealWidth());
 		}
-		if(time - delta > 0.5) {
+		
+		if(time - delta > 0.3) {
 			gActor.idle();
 			return true;
 		}

@@ -11,6 +11,7 @@ public class ItemAction extends Action{
 	private float gravity = 1500;
 	private float v = 400;
 	private float lastPosY = 0;
+	private float rotateSpeed = 1500;
 	
 	@Override
 	public boolean act(float delta) {
@@ -20,7 +21,7 @@ public class ItemAction extends Action{
 		Item item = (Item)actor;
 		v = v - gravity * t;
 		item.setY(item.getY() + deltaS);
-		actor.rotate(10 * delta);
+		actor.rotate(rotateSpeed * delta);
 		if(deltaS < 0){
 			for(int i = 0; i < item.mGameLevel.lands.size(); i++){
 				if(CollisionDetect.detect(item, item.mGameLevel.lands.get(i))){

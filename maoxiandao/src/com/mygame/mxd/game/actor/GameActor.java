@@ -70,7 +70,7 @@ public abstract class GameActor extends Actor{
 	abstract public void checkPostionCallBack();
 	abstract public boolean checkPostion();
 	/*有时候砍怪血量很少的时候，怪物并不会受伤，因此会继续前进*/
-	abstract public boolean isHurt();
+	abstract public boolean isHurt(GameActor gameActor);
 	public boolean beAttacked(){
 		return false;
 	}

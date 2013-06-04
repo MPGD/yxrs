@@ -10,13 +10,14 @@ import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mygame.mxd.game.actor.XiaoMing;
 import com.mygame.mxd.game.gameutils.GamePad;
 import com.mygame.mxd.game.options.ActionBar;
 import com.mygame.mxd.game.options.CharacterPack;
 import com.mygame.mxd.game.options.Equipment;
 import com.mygame.mxd.game.options.EquipmentHandle;
 import com.mygame.mxd.game.options.PackSource;
-
+import com.mygame.mxd.game.gameutils.StatusBar;
 public class GameUtilStage extends Stage {
 
 	public GamePad mGamePad;
@@ -27,11 +28,23 @@ public class GameUtilStage extends Stage {
 	private Button btn_pack;
 	private CharacterPack characterPack;
 	public static PackSource packSource;
-
+	public StatusBar statusBar;
+	public XiaoMing xiaoming;
 	public GameUtilStage(float width, float height, boolean keepAspectRatio) {
 		super(width, height, keepAspectRatio);
 		Gdx.input.setInputProcessor(this);
 		addButtons();
+	}
+
+	public void update(){
+		statusBar.update(xiaoming);
+	}
+	
+	@Override
+	public void draw() {
+		// TODO Auto-generated method stub
+		update();
+		super.draw();
 	}
 
 	private void addButtons() {
@@ -48,6 +61,7 @@ public class GameUtilStage extends Stage {
 		addActor(buttJump);
 		addActor(buttAttack);
 
+		statusBar = new StatusBar(this, 0, DataSet.ScreenHeight - 31);
 		// 测试背包代码
 
 		Texture mtexture2 = AssetManagerSingleton.manager.get("data/items/options/ic_launcher.png");

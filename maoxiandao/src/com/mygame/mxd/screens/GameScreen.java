@@ -43,7 +43,7 @@ public class GameScreen extends BaseScreen {
 	public void show() {
 		xiaoming = new XiaoMing();
 		mUtilStage = new GameUtilStage(DataSet.ScreenWidth, DataSet.ScreenHeight, true);
-
+		mUtilStage.xiaoming = xiaoming;
 		mGameLevel = LevelLoader.load(this, 0);
 		mGameCtrl = new GameController(xiaoming);
 		mGameCtrl.setGamePad(mUtilStage.mGamePad);

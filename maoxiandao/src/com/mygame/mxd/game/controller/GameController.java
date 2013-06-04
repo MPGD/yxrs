@@ -8,6 +8,7 @@ import com.mygame.mxd.game.GameStage;
 import com.mygame.mxd.game.actor.GameActor;
 import com.mygame.mxd.game.actor.XiaoMing;
 import com.mygame.mxd.game.gameutils.GamePad;
+import com.mygame.mxd.game.gameutils.StatusBar;
 
 public class GameController {
 	public static int UP = 1;

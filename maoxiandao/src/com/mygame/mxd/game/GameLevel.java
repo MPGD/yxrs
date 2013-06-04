@@ -111,6 +111,9 @@ public class GameLevel implements Disposable{
 	public void setScene(GameScene scene){
 		mGameScene = scene;
 	}
+	public GameScene getScene(){
+		return mGameScene;
+	}
 	
 	public void setBGM(Music bgm){
 		this.bgm = bgm;

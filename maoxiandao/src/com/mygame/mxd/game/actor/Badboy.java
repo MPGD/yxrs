@@ -29,11 +29,15 @@ public class Badboy extends GameActor{
 	private GameSound sound1 = new GameSound((Sound) AssetManagerSingleton.manager.get("data/audio/0100120.Damage.mp3"));
 	private GameSound sound2 = new GameSound((Sound) AssetManagerSingleton.manager.get("data/audio/0100100.Die.mp3"));
 	private GameSound soundDropItem = new GameSound((Sound) AssetManagerSingleton.manager.get("data/audio/DropItem.mp3"));
+	private boolean isIgnore = false;
 	//战斗属性
-	public float hpTotal = 100;
+	public float hpTotal = 1000;
 	public float hpCurr = 100;
-	public float damage = 5;
+	public float damage = 15;
 	public float defense = 5;
+	public float accuracy = 80;
+	public float dodge = 5;
+	
 	public float loseHp = 0;
 	@Override
 	public boolean checkPostion() {
@@ -98,6 +102,23 @@ public class Badboy extends GameActor{
 		return speed;
 	}
 
+	public boolean isIgnore(){
+		return isIgnore;
+	}
+	
+	public void ignore(){
+		isIgnore = true;
+		addAction(Actions.sequence(Actions.delay(0.5f), Actions.run(new Runnable(){
+
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				isIgnore = false;
+			}
+			
+		})));
+	}
+	
 	@Override
 	public void draw(SpriteBatch batch, float parentAlpha) {
 		// TODO Auto-generated method stub
@@ -107,9 +128,10 @@ public class Badboy extends GameActor{
 	}
 
 	@Override
-	public boolean isHurt() {
+	public boolean isHurt(GameActor gActor) {
 		// TODO Auto-generated method stub
-		loseHp = mGameLevel.getGameScreen().getXiaoMing().getAttackDamage();
+		XiaoMing xiaoming = (XiaoMing)gActor;
+		loseHp = xiaoming.getAttackDamage();
 		if(loseHp > hpTotal * 0.15f) return true;
 		return false;
 	}
@@ -126,7 +148,7 @@ public class Badboy extends GameActor{
 		}
 		Array<Action> arrAction = getActions();
 		addAction(new HurtAction(hurtLeft));
-		DamageNumber n = new DamageNumber(120, getRealX(), getRealY());
+		DamageNumber n = new DamageNumber((int)loseHp, getRealX(), getRealY());
 		getStage().addActor(n);
 		sound1.play();
 		return false;

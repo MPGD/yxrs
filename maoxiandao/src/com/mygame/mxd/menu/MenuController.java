@@ -118,7 +118,12 @@ public class MenuController {
 		assetList.add(new AssetDescriptor("data/menu/square.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/items/options/Item.backgrnd.png", Texture.class));
 		assetList.add(new AssetDescriptor("data/items/options/ic_launcher.png", Texture.class));
-
+		assetList.add(new AssetDescriptor("data/hpbarempty.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/hpbarfull.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/number/number.Lbracket.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/number/number.Rbracket.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/number/number.percent.png", Texture.class));
+		assetList.add(new AssetDescriptor("data/number/number.slash.png", Texture.class));
 		for (int i = 0; i < 6; i++) {
 			assetList.add(new AssetDescriptor("data/actor/swordeffect/sword_effect" + (i + 1) + ".png", Texture.class));
 		}
@@ -140,7 +145,10 @@ public class MenuController {
 		for (int i = 0; i < 10; i++) {
 			assetList.add(new AssetDescriptor("data/number/tt" + i + ".png", Texture.class));
 		}
-
+		for(int i = 0; i < 10; i++){
+			assetList.add(new AssetDescriptor("data/number/number." + i + ".png", Texture.class));
+		}
+		
 		game.setScreen(new Progress(game, assetList, "com.mygame.mxd.screens.GameScreen"));
 	}
 
