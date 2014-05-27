@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<levels >
+	<content level="0">
+	    <background front="data/maps/mxd_1_1front.png" back="data/maps/mxd_1_1back.jpg"/>
+	    <bgm name=""/>
+		<land x1="0"	x2="945"	y="960"/>
+		<land x1="945"  x2="1035"   y="900"/>
+		<land x1="1035" x2="1682"   y="843"/>
+		<land x1="864"  x2="995"	y="784"/>
+		<land x1="0"    x2="680"    y="843"/>
+		<land x1="680"  x2="768"    y="780"/>
+		<land x1="768"  x2="1617"   y="724"/>
+		<land x1="1044"  x2="1682"  y="481"/>
+		<wall x="945"   y1="960"    y2="900"/>
+		<wall x="1035"  y1="900"    y2="843"/>   
+		<wall x="680"   y1="843"    y2="780"/> 
+		<wall x="768"   y1="780"    y2="724"/>
+		<ladder x="1300"  y1="714"   y2="481"/>
+		<enemy name="ghost" x="500" y="200"/>
+		<enemy name="ghost" x="500" y="275"/>
+		<enemy name="ghost" x="400" y="350"/>
+		<startleft x="100" y="400"/>
+		<startright x="700" y="150"/>
+	</content>
+	<content level="1">
+	    <background name="data/testbg.png"/>
+	    <bgm name=""/> 
+		<land 	x1="0"	 x2="800"	 y="150"/>
+		<land x1="0"  x2="250"  y="280"/>
+		<land x1="600"  x2="800"  y="280"/>
+		<enemy name="ghost" x="500" y="200"/> 
+		<enemy name="ghost" x="400" y="350"/>
+		<startleft x="100" y="400"/>
+		<startright x="700" y="150"/>
+	</content>
+	<content level="2">
+	    <background name="data/bg.jpg"/>
+	    <bgm name=""/>
+		<land 	x1="0"	 x2="800"	 y="150"/>
+		<land x1="0"  x2="250"  y="280"/>
+		<land x1="600"  x2="800"  y="280"/>
+		<enemy name="ghost" x="500" y="200"/>
+		<enemy name="ghost" x="500" y="100"/>
+		<enemy name="ghost" x="400" y="350"/>
+		<startleft x="100" y="400"/>
+		<startright x="700" y="150"/>
+	</content>
+</levels>
